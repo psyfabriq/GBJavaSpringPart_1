@@ -8,4 +8,9 @@
 
 	<!-- Uncomment and add your base-package here: <context:component-scan base-package="org.springframework.samples.service"/> -->
 
+	<bean id="bullet2" class="ru.podstavkov.spring1.beans.Bullet" />
+	<bean id="Gun2" scope="prototype"
+		class="ru.podstavkov.spring1.beans.Gun">
+		<property name="bullet" ref="bullet2" />
+	</bean>
 </beans>
