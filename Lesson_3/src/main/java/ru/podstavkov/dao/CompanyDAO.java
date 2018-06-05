@@ -11,8 +11,8 @@ import ru.podstavkov.entity.Company;
 @Transactional
 public class CompanyDAO extends AbstractDAO {
 
-    public List<Company> getListProject() {
-        return em.createQuery("SELECT e FROM Project e", Company.class).getResultList();
+    public List<Company> getListCompany() {
+        return em.createQuery("SELECT e FROM Company e", Company.class).getResultList();
     }
 
     public Company merge(Company company) {
