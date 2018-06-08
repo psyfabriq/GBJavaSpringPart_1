@@ -2,13 +2,16 @@ package ru.podstavkov.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "company")
 public class Company extends AbstractEntity {
 
-	@Column
+	@Column(name = "description")
 	private String description;
-	@Column
+	
+	@Column(name = "address")
 	private String address;
 	
 	public String getDescription() {

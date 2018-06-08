@@ -3,13 +3,16 @@ package ru.podstavkov.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ad")
 public class Ad extends AbstractEntity {
 
-	@Column
+	@Column(name = "phone")
 	private String phone;
-	@Column
+	
+	@Column(name = "content")
 	private String content;
 	
     @ManyToOne

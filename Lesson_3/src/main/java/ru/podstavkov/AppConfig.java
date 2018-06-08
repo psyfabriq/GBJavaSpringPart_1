@@ -4,9 +4,12 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -17,54 +20,63 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ru.podstavkov.dao")
+@PropertySource("classpath:db-conf.properties")
 public class AppConfig {
+
 	@Bean(name = "dataSource")
-	public DataSource getDataSource() {
+	public DataSource dataSource(@Value("${datasource.driver}") String dataSourceDriver,
+			@Value("${datasource.url}") String dataSourceUrl, @Value("${datasource.username}") String dataSourceUser,
+			@Value("${datasource.password}") String dataSourcePassword,
+			@Value("${datasource.schema}") String dataSourceScheme) {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/lesson3");
-		dataSource.setUsername("pgadmin");
-		dataSource.setDriverClassName("org.postgresql.Driver");
-	    dataSource.setPassword("pgadmin");
+		dataSource.setDriverClassName(dataSourceDriver);
+		dataSource.setUrl(dataSourceUrl);
+		dataSource.setUsername(dataSourceUser);
+		dataSource.setPassword(dataSourcePassword);
 		return dataSource;
 	}
 
 	@Bean(name = "entityManagerFactory")
-	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
+			@Qualifier("dataSource") DataSource dataSource, @Value("${hibernate.max_fetch_depth}") String maxFetchDepth,
+			@Value("${hibernate.jdbc.fetch_size}") String fetchSize,
+			@Value("${hibernate.jdbc.batch_size}") String batchSize, @Value("${hibernate.show_sql}") String showSql,
+			@Value("${hibernate.hb2ddl.auto}") String hb2ddl
+
+	) {
 		// Создание класса фабрики, реализующей интерфейс
 		// FactoryBean<EntityManagerFactory>
 		final LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
 		// Задание источника подключения
-		factory.setDataSource(getDataSource());
+		factory.setDataSource(dataSource);
 		// Задание адаптера для конкретной реализации JPA
 		// указывает, какая именно библиотека будет использоваться в качестве поставщика
 		// постоянства
 		factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		// Указание пакетов, в которых будут находиться классы-сущности
 		factory.setPackagesToScan("ru.podstavkov.entity");
-		factory.setPersistenceUnitName("persistenceUnit");
+		// factory.setPersistenceUnitName("persistenceUnit");
 		// Создание свойств для настройки Hibernate
 		final Properties properties = new Properties();
-		// Указание диалекта конкретной базы данных – необходимо для генерации запросов
-		// Hibernate к БД
-		properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
 		// Указание максимальной глубины связи (будет рассмотрено в следующем уроке)
-		properties.put("hibernate.max_fetch_depth", 3);
+		properties.put("hibernate.max_fetch_depth", maxFetchDepth);
 		// Определение максимального количества строк, возвращаемых за один запрос из БД
-		properties.put("hibernate.jdbc.fetch_size", 50);
+		properties.put("hibernate.jdbc.fetch_size", fetchSize);
 		// Определение максимального количества запросов при использовании пакетных
 		// операций
-		properties.put("hibernate.jdbc.batch_size", 10);
+		properties.put("hibernate.jdbc.batch_size", batchSize);
 		// Включает логирование
-		properties.put("hibernate.show_sql", true);
-		properties.put("hibernate.hbm2ddl.auto", "update");
+		properties.put("hibernate.show_sql", showSql);
+		properties.put("hibernate.hbm2ddl.auto", hb2ddl);
 		factory.setJpaProperties(properties);
 		return factory;
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager() {
+	public PlatformTransactionManager transactionManager(
+			@Qualifier("entityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
-		transactionManager.setEntityManagerFactory(entityManagerFactoryBean().getObject());
+		transactionManager.setEntityManagerFactory(entityManagerFactoryBean.getObject());
 		return transactionManager;
 	}
 
