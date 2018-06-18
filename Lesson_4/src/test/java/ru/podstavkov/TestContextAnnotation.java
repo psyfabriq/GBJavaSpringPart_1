@@ -1,7 +1,5 @@
 package ru.podstavkov;
 
-import java.util.Map;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testng.Assert;
@@ -12,7 +10,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import ru.podstavkov.configuration.AppConfig;
-import ru.podstavkov.entity.Task;
 import ru.podstavkov.service.AplicationService;
 import ru.podstavkov.utils.AppUtil;
 

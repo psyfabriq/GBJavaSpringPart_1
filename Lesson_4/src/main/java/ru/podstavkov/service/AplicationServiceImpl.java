@@ -16,6 +16,7 @@ import ru.podstavkov.dao.TaskDAO;
 import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Company;
 import ru.podstavkov.entity.Task;
+import ru.podstavkov.entity.exeption.BuilderExeption;
 
 @Service
 @Component(value = "appservice")
@@ -31,19 +32,19 @@ public class AplicationServiceImpl implements AplicationService {
 	private CompanyDAO companyDAO;
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public Category createCategory(Map<String, Object> map) {
-	
+
 		Category category = new Category();
 		category.setName((String) map.get("name"));
 		return categoryDAO.merge(category);
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public Company createCompany(Map<String, Object> map) {
-	//	if (AppUtil.checkHasAllVariables(map, "name", "address"))
-	//		return false;
+		// if (AppUtil.checkHasAllVariables(map, "name", "address"))
+		// return false;
 
 		Company company = new Company();
 		company.setName((String) map.get("name"));
@@ -53,143 +54,153 @@ public class AplicationServiceImpl implements AplicationService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public Task createTask(Map<String, Object> map) {
-		//if (AppUtil.checkHasAllVariables(map, "name", "content"))
-		//	return false;
-		
-		List<String> tList = (List<String>)map.get("category_id");		
+
+		List<String> tList = (List<String>) map.get("category_id");
 		List<Category> listCategory = getlistCategoryByIDs(tList.toArray(new String[0]));
-		Task task = new Task();
-		task.setName((String) map.get("name"));
-	    task.setCategory(listCategory);
-		task.setContent((String) map.get("content"));
-		task.setOwner(getCompany((String) map.get("owner_id")));
-		
-		return taskDAO.merge(task);
+		Task task;
+		try {
+			task = Task.getBuilder()
+					.setName((String) map.get("name"))
+					.setCategory(listCategory)
+					.setContent((String) map.get("content"))
+					.setOwner(getCompany((String) map.get("owner_id")))
+					.build();
+			return taskDAO.merge(task);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
+			return null;
+		}
+
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public boolean deleteCategory(String id) {
 		categoryDAO.removeCategory(id);
 		return true;
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public boolean deleteCompany(String id) {
 		companyDAO.removeCompany(id);
 		return true;
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public boolean deleteTask(String id) {
 		taskDAO.removeTask(id);
 		return true;
-		}
+	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void updateCategory(Map<String, Object> map) {
 		Category category = new Category();
-		category.setId((String)map.get("id"));
-		category.setName((String)map.get("name"));
+		category.setId((String) map.get("id"));
+		category.setName((String) map.get("name"));
 		categoryDAO.persist(category);
 	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void updateCompany(Map<String, Object> map) {
 		Company company = new Company();
-		company.setId((String)map.get("id"));
-		company.setName((String)map.get("name"));
-		company.setAddress((String)map.get("address"));
-		company.setDescription((String)map.get("description"));
-		companyDAO.persist(company);	
-		}
+		company.setId((String) map.get("id"));
+		company.setName((String) map.get("name"));
+		company.setAddress((String) map.get("address"));
+		company.setDescription((String) map.get("description"));
+		companyDAO.persist(company);
+	}
 
 	@Override
-	@Transactional(readOnly=false)
+	@Transactional(readOnly = false)
 	public void updateTask(Map<String, Object> map) {
-		Task task = new Task();
-		task.setId((String)map.get("id"));
-		task.setName((String)map.get("name"));
-		task.setContent((String)map.get("content"));
-		task.setOwner(getCompany((String)map.get("owner_id")));
-		//task.setCategory(get);
-		taskDAO.persist(task);
+		Task task;
+		try {
+			task = Task.getBuilder()
+					.setId((String) map.get("id"))
+					.setName((String) map.get("name"))
+					.setContent((String) map.get("content"))
+					.setOwner(getCompany((String) map.get("owner_id")))
+					.build();
+			taskDAO.persist(task);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
 		}
+	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Category getCategory(String id) {
 		return categoryDAO.getCategoryById(id).get(1);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Company getCompany(String id) {
 		return companyDAO.getCompanyById(id);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Task getTask(String id) {
 		return taskDAO.getTaskById(id).get(1);
 	}
-	
+
 	@Override
-	@Transactional(readOnly=true)
-	public Collection<Task> getTasks(String ...ids) {
+	@Transactional(readOnly = true)
+	public Collection<Task> getTasks(String... ids) {
 		return taskDAO.getTaskById(ids);
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Collection<Category> listCategory() {
 		return categoryDAO.getListCategory();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Collection<Company> listCompany() {
 		return companyDAO.getListCompany();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Collection<Task> listTask() {
 		return taskDAO.getListTask();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Collection<Task> getListTaskByCategory(String category_id) {
 		return getListTaskByCategory(categoryDAO.getCategoryById(category_id).get(1));
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Collection<Task> getListTaskByCategory(Category category) {
 		return category.getTasks();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Company getCompanyByTask(String task_id) {
 		return getCompanyByTask(taskDAO.getTaskById(task_id).get(1));
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Company getCompanyByTask(Task task) {
 		return task.getOwner();
 	}
 
 	@Override
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<Category> getlistCategoryByIDs(String... ids) {
 		return categoryDAO.getCategoryById(ids);
 	}

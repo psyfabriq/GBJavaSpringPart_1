@@ -13,6 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import ru.podstavkov.entity.exeption.BuilderExeption;
+
 @Entity
 @Table(name = "task")
 public class Task extends AbstractEntity {
@@ -36,47 +38,82 @@ public class Task extends AbstractEntity {
     @JoinColumn(name="owner_id")
     private Company owner;
     
-    
-    
 
-
-	public Task() {
+	private Task() {
 		super();
 		this.active = true;
 	}
+	
+    public static Builder getBuilder() {
+        return new Task().new Builder();
+    }
+
 
 	public String getContent() {
 		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
 	}
 
 	public List<Category> getCategory() {
 		return category;
 	}
 
-	public void setCategory(List<Category> category) {
-		this.category = category;
-	}
-
 	public Company getOwner() {
 		return owner;
-	}
-
-	public void setOwner(Company owner) {
-		this.owner = owner;
 	}
 
 	public boolean isActive() {
 		return active;
 	}
-
+	
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	public class Builder {
 
+		public Builder setId(String id) {
+			Task.this.setId(id);
+			return this;
+		}
+		
+		public Builder setName(String name) {
+			Task.this.setName(name);
+			return this;
+		}
+		
+		public Builder setOwner(Company owner) {
+			Task.this.owner = owner;
+			return this;
+		}
+		
+		public Builder setCategory(List<Category> category) {
+			Task.this.category = category;
+			return this;
+		}
+		
+		public Builder setContent(String content) {
+			Task.this.content = content;
+			return this;
+		}
+		
+		public Task build() throws BuilderExeption {
+			
+			if ("".equals(Task.this.getName())||Task.this.getName() == null) {
+				throw new BuilderExeption("Name Task coud`t  be empty!");
+			}
+			
+			if (Task.this.owner == null) {
+				throw new BuilderExeption("Not set Owner!");
+			}
+			
+			if (Task.this.category == null || Task.this.category.size() == 0 ) {
+				throw new BuilderExeption("Not set Category!");
+			}
+			
+			 return Task.this;
+		}
+	}
+	
 	
 
 	
