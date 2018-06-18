@@ -21,6 +21,9 @@ public class Task extends AbstractEntity {
 	@Column(name = "content")
 	private String content;
 	
+	@Column(name = "active")
+	private boolean active;
+	
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(
     		name = "tasks_categories",
@@ -56,6 +59,14 @@ public class Task extends AbstractEntity {
 
 	public void setOwner(Company owner) {
 		this.owner = owner;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	

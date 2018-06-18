@@ -24,6 +24,7 @@ public interface AplicationService {
 	Category getCategory(String id);
 	Company getCompany (String id);
 	Task getTask(String id);
+	Collection<Task>  getTasks(String ...ids);
 	
 	Collection<Category> listCategory();
 	Collection<Company>  listCompany();

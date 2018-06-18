@@ -15,7 +15,7 @@ public class App {
 
 		TaskDAO articleRepository = context.getBean("adDAO", TaskDAO.class);
 		
-		Collection<Task> tasks = articleRepository.getListAd();
+		Collection<Task> tasks = articleRepository.getListTask();
 		tasks.forEach(ad -> {
 			System.out.println("Category: " + ad.getCategory());
 		});

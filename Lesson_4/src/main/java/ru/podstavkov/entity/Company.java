@@ -11,6 +11,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "company")
 public class Company extends AbstractEntity {
+	
+	
 
 	@Column(name = "description")
 	private String description;
@@ -37,4 +39,13 @@ public class Company extends AbstractEntity {
 		this.address = address;
 	}
 
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	
 }
