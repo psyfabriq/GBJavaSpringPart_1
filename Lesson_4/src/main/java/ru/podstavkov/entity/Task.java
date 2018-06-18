@@ -35,7 +35,15 @@ public class Task extends AbstractEntity {
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="owner_id")
     private Company owner;
+    
+    
+    
 
+
+	public Task() {
+		super();
+		this.active = true;
+	}
 
 	public String getContent() {
 		return content;

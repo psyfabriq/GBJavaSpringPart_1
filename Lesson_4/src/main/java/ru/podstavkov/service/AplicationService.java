@@ -9,9 +9,9 @@ import ru.podstavkov.entity.Company;
 
 public interface AplicationService {
 	
-	boolean createCategory(Map<String, Object> map);
-	boolean createCompany(Map<String, Object> map);
-	boolean createTask(Map<String, Object> map);
+	Category createCategory(Map<String, Object> map);
+	Company createCompany(Map<String, Object> map);
+	Task createTask(Map<String, Object> map);
 	
 	boolean deleteCategory(String id);
 	boolean deleteCompany(String id);

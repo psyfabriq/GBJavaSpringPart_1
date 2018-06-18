@@ -41,6 +41,7 @@ public class TaskDAO extends AbstractDAO{
         update.set("name", task.getName());
         update.set("content", task.getContent());
         update.set("owner_id", task.getOwner());
+        update.set("active", task.isActive());
         update.where(cb.greaterThanOrEqualTo(e.get("id"), task.getId()));
         // perform update
         this.em.createQuery(update).executeUpdate();

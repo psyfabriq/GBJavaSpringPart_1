@@ -31,14 +31,14 @@ public class TestContextAnnotation {
 	        ObjectNode objectNodeCategory = mapper.createObjectNode();
 	        objectNodeCategory.put("name", "Test Category 2");
 	        
-	     //  Assert.assertTrue(tservice.createCategory(AppUtil.getValues(objectNodeCategory.toString())));
+	     //  Assert.assertNotNull(tservice.createCategory(AppUtil.getValues(objectNodeCategory.toString())));
 	        
 	        ObjectNode objectNodeCompany = mapper.createObjectNode();
 	        objectNodeCompany.put("name", "GOODS COMPANY");
 	        objectNodeCompany.put("address", "LONDON");
 	        objectNodeCompany.put("description", "litle company ))))");
 	        
-	      //  Assert.assertTrue(tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString())));
+	      //  Assert.assertNotNull(tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString())));
 	        
 	        ObjectNode objectNodeTask  = mapper.createObjectNode();
 
@@ -51,7 +51,7 @@ public class TestContextAnnotation {
 	        arrayCategoriesID.add("cb4631eb-6bc9-4f0a-9b5d-a8b718200c56");
 	        
 
-	        //Assert.assertTrue(tservice.createTask(AppUtil.getValues(objectNodeTask.toString())));
+	        Assert.assertNotNull(tservice.createTask(AppUtil.getValues(objectNodeTask.toString())));
 	        
 	       // ObjectNode objectNodeCompanyGet = mapper.createObjectNode();
 	        
@@ -61,6 +61,6 @@ public class TestContextAnnotation {
 			//	System.out.println(task.getName());
 			//}
 	        
-	        Assert.assertTrue(tservice.deleteTask("d384b336-54da-4bb5-9aac-0804fd7ab90d"));
+	        //Assert.assertTrue(tservice.deleteTask("d384b336-54da-4bb5-9aac-0804fd7ab90d"));
 	    }
 }

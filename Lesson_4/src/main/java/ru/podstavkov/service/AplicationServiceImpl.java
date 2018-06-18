@@ -32,18 +32,16 @@ public class AplicationServiceImpl implements AplicationService {
 
 	@Override
 	@Transactional(readOnly=false)
-	public boolean createCategory(Map<String, Object> map) {
+	public Category createCategory(Map<String, Object> map) {
 	
 		Category category = new Category();
 		category.setName((String) map.get("name"));
-		 Assert.assertNotNull((categoryDAO.merge(category)));
-
-		return true;
+		return categoryDAO.merge(category);
 	}
 
 	@Override
 	@Transactional(readOnly=false)
-	public boolean createCompany(Map<String, Object> map) {
+	public Company createCompany(Map<String, Object> map) {
 	//	if (AppUtil.checkHasAllVariables(map, "name", "address"))
 	//		return false;
 
@@ -51,13 +49,12 @@ public class AplicationServiceImpl implements AplicationService {
 		company.setName((String) map.get("name"));
 		company.setAddress((String) map.get("address"));
 		company.setDescription((String) map.get("description"));
-		companyDAO.merge(company);
-		return true;
+		return companyDAO.merge(company);
 	}
 
 	@Override
 	@Transactional(readOnly=false)
-	public boolean createTask(Map<String, Object> map) {
+	public Task createTask(Map<String, Object> map) {
 		//if (AppUtil.checkHasAllVariables(map, "name", "content"))
 		//	return false;
 		
@@ -68,8 +65,8 @@ public class AplicationServiceImpl implements AplicationService {
 	    task.setCategory(listCategory);
 		task.setContent((String) map.get("content"));
 		task.setOwner(getCompany((String) map.get("owner_id")));
-		taskDAO.merge(task);
-		return true;
+		
+		return taskDAO.merge(task);
 	}
 
 	@Override
