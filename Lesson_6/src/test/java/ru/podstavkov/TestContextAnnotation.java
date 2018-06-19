@@ -39,7 +39,7 @@ public class TestContextAnnotation {
 	        
 	        ObjectNode objectNodeTask  = mapper.createObjectNode();
 
-	        objectNodeTask.put("name", "third task");
+	        objectNodeTask.put("name", "task");
 	        objectNodeTask.put("content", "some text : ))))))");
 	        objectNodeTask.put("owner_id", "f939c910-0a02-4d2f-8cff-63e0557908bf");
 	        
