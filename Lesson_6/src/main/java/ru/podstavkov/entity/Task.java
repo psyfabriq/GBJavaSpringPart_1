@@ -2,6 +2,7 @@ package ru.podstavkov.entity;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ru.podstavkov.entity.exeption.BuilderExeption;
 import ru.podstavkov.utils.AppUtil;
@@ -28,12 +34,19 @@ public class Task extends AbstractEntity {
 	@Column(name = "active")
 	private boolean active;
 	
+	@Column(name="published_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date publishedDate;
+	
+	
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(
     		name = "tasks_categories",
             joinColumns = { @JoinColumn(name = "task_id") }, 
             inverseJoinColumns = { @JoinColumn(name = "category_id") }
         )
+    @JsonIgnore
     private  List<Category> category = new ArrayList();
     
     @ManyToOne(fetch=FetchType.EAGER)

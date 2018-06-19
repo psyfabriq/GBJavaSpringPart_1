@@ -1,4 +1,4 @@
-package ru.podstavkov.configuration;
+package ru.podstavkov.config;
 
 import java.util.Properties;
 
@@ -16,12 +16,13 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("ru.podstavkov.dao,ru.podstavkov.service")
 @PropertySource("classpath:db-conf.properties")
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer{
 
 	@Bean(name = "dataSource")
 	public DataSource dataSource(@Value("${datasource.driver}") String dataSourceDriver,
