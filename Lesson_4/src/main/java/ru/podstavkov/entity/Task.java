@@ -1,5 +1,6 @@
 package ru.podstavkov.entity;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import ru.podstavkov.entity.exeption.BuilderExeption;
+import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "task")
@@ -34,7 +36,7 @@ public class Task extends AbstractEntity {
         )
     private  List<Category> category = new ArrayList();
     
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="owner_id")
     private Company owner;
     
@@ -96,7 +98,7 @@ public class Task extends AbstractEntity {
 			return this;
 		}
 		
-		public Task build() throws BuilderExeption {
+		public Task build() throws BuilderExeption, NoSuchAlgorithmException {
 			
 			if ("".equals(Task.this.getName())||Task.this.getName() == null) {
 				throw new BuilderExeption("Name Task coud`t  be empty!");
@@ -109,6 +111,9 @@ public class Task extends AbstractEntity {
 			if (Task.this.category == null || Task.this.category.size() == 0 ) {
 				throw new BuilderExeption("Not set Category!");
 			}
+			
+			Task.this.setHash(AppUtil.hashString(Task.this.getName()+Task.this.getOwner().getId()));
+			
 			
 			 return Task.this;
 		}

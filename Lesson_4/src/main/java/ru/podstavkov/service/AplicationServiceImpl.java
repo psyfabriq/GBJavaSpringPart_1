@@ -1,5 +1,6 @@
 package ru.podstavkov.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,9 @@ public class AplicationServiceImpl implements AplicationService {
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 			return null;
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 
@@ -60,6 +64,9 @@ public class AplicationServiceImpl implements AplicationService {
 			.build();
 			return companyDAO.merge(company);
 		} catch (BuilderExeption e) {
+			e.printStackTrace();
+			return null;
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -81,6 +88,9 @@ public class AplicationServiceImpl implements AplicationService {
 					.build();
 			return taskDAO.merge(task);
 		} catch (BuilderExeption e) {
+			e.printStackTrace();
+			return null;
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -120,7 +130,8 @@ public class AplicationServiceImpl implements AplicationService {
 			categoryDAO.persist(category);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
-		
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -138,6 +149,8 @@ public class AplicationServiceImpl implements AplicationService {
 			companyDAO.persist(company);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -154,6 +167,8 @@ public class AplicationServiceImpl implements AplicationService {
 					.build();
 			taskDAO.persist(task);
 		} catch (BuilderExeption e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 	}

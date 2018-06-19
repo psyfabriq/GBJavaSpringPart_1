@@ -5,6 +5,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
+/**
+ * @author psyfabriq
+ *
+ */
 @MappedSuperclass
 public abstract class AbstractEntity {
 	@Id
@@ -12,6 +16,9 @@ public abstract class AbstractEntity {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "hash",unique=true, nullable=false)
+	private  String hash;
 
 	public String getId() {
 		return id;
@@ -28,5 +35,15 @@ public abstract class AbstractEntity {
 	protected void setName(String name) {
 		this.name = name;
 	}
+
+	public String getHash() {
+		return hash;
+	}
+
+	protected void setHash(String hash) {
+		this.hash = hash;
+	}
+	
+	
 
 }

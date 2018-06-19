@@ -35,17 +35,17 @@ public class TestContextAnnotation {
 	        objectNodeCompany.put("address", "LONDON");
 	        objectNodeCompany.put("description", "litle company ))))");
 	        
-	      //  Assert.assertNotNull(tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString())));
+	     //   Assert.assertNotNull(tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString())));
 	        
 	        ObjectNode objectNodeTask  = mapper.createObjectNode();
 
-	        objectNodeTask.put("name", "first task");
+	        objectNodeTask.put("name", "third task");
 	        objectNodeTask.put("content", "some text : ))))))");
-	        objectNodeTask.put("owner_id", "040536d2-c16c-40bd-b02c-38ab25501ce7");
+	        objectNodeTask.put("owner_id", "f939c910-0a02-4d2f-8cff-63e0557908bf");
 	        
 	        ArrayNode arrayCategoriesID = objectNodeTask.putArray("category_id");
-	        arrayCategoriesID.add("078378fa-4b70-431b-8cc3-66803ee36194");
-	        arrayCategoriesID.add("cb4631eb-6bc9-4f0a-9b5d-a8b718200c56");
+	        arrayCategoriesID.add("3b7b85ad-fce9-4dfc-b625-8a7161820df6");
+	        arrayCategoriesID.add("88550bef-d7a1-43db-8ebf-61b27551961e");
 	        
 
 	        Assert.assertNotNull(tservice.createTask(AppUtil.getValues(objectNodeTask.toString())));

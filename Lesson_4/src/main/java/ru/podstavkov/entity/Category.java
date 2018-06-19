@@ -1,5 +1,6 @@
 package ru.podstavkov.entity;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import ru.podstavkov.entity.Company.Builder;
 import ru.podstavkov.entity.exeption.BuilderExeption;
+import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "category")
@@ -52,7 +53,14 @@ public class Category extends AbstractEntity {
 			return this;
 		}
 
-		public Category build() throws BuilderExeption {
+		public Category build() throws BuilderExeption, NoSuchAlgorithmException {
+			
+			if ("".equals(Category.this.getName())||Category.this.getName() == null) {
+				throw new BuilderExeption("Name Category coud`t  be empty!");
+			}
+			
+			Category.this.setHash(AppUtil.hashString(Category.this.getName()));
+			
 			return Category.this;
 		}
 	}

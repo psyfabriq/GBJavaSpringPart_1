@@ -1,5 +1,6 @@
 package ru.podstavkov.entity;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import ru.podstavkov.entity.Task.Builder;
 import ru.podstavkov.entity.exeption.BuilderExeption;
+import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "company")
@@ -55,7 +56,7 @@ public class Company extends AbstractEntity {
 			return this;
 		}
 		
-		public Builder setName(String name) {
+		public Builder setName(String name)  {
 			Company.this.setName(name);
 			return this;
 		}
@@ -76,7 +77,14 @@ public class Company extends AbstractEntity {
 			return this;
 		}
 		
-		public Company build() throws BuilderExeption {
+		public Company build() throws BuilderExeption, NoSuchAlgorithmException {
+			
+			if ("".equals(Company.this.getName())||Company.this.getName() == null) {
+				throw new BuilderExeption("Name Company coud`t  be empty!");
+			}
+			
+			Company.this.setHash(AppUtil.hashString(Company.this.getName()));
+
 			 return Company.this;
 		}
 	}
