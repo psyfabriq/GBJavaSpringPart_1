@@ -35,22 +35,34 @@ public class AplicationServiceImpl implements AplicationService {
 	@Transactional(readOnly = false)
 	public Category createCategory(Map<String, Object> map) {
 
-		Category category = new Category();
-		category.setName((String) map.get("name"));
-		return categoryDAO.merge(category);
+		Category category;
+		try {
+			category = Category.getBuilder()
+			.setName((String) map.get("name"))
+			.build();
+			return categoryDAO.merge(category);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public Company createCompany(Map<String, Object> map) {
-		// if (AppUtil.checkHasAllVariables(map, "name", "address"))
-		// return false;
 
-		Company company = new Company();
-		company.setName((String) map.get("name"));
-		company.setAddress((String) map.get("address"));
-		company.setDescription((String) map.get("description"));
-		return companyDAO.merge(company);
+		Company company;
+		try {
+			company = Company.getBuilder()
+			.setName((String) map.get("name"))
+			.setAddress((String) map.get("address"))
+			.setDescription((String) map.get("description"))
+			.build();
+			return companyDAO.merge(company);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -99,21 +111,34 @@ public class AplicationServiceImpl implements AplicationService {
 	@Override
 	@Transactional(readOnly = false)
 	public void updateCategory(Map<String, Object> map) {
-		Category category = new Category();
-		category.setId((String) map.get("id"));
-		category.setName((String) map.get("name"));
-		categoryDAO.persist(category);
+		Category category;
+		try {
+			category = Category.getBuilder()
+			.setId((String) map.get("id"))
+			.setName((String) map.get("name"))
+			.build();
+			categoryDAO.persist(category);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
+		
+		}
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void updateCompany(Map<String, Object> map) {
-		Company company = new Company();
-		company.setId((String) map.get("id"));
-		company.setName((String) map.get("name"));
-		company.setAddress((String) map.get("address"));
-		company.setDescription((String) map.get("description"));
-		companyDAO.persist(company);
+		Company company;
+		try {
+			company = Company.getBuilder()
+			.setId((String) map.get("id"))
+			.setName((String) map.get("name"))
+			.setAddress((String) map.get("address"))
+			.setDescription((String) map.get("description"))
+			.build();
+			companyDAO.persist(company);
+		} catch (BuilderExeption e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

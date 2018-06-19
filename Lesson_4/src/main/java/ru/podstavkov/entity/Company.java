@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ru.podstavkov.entity.Task.Builder;
+import ru.podstavkov.entity.exeption.BuilderExeption;
+
 @Entity
 @Table(name = "company")
 public class Company extends AbstractEntity {
@@ -22,29 +25,60 @@ public class Company extends AbstractEntity {
 
 	@OneToMany(mappedBy = "owner")
 	private List<Task> tasks = new ArrayList();
+	
+	private Company() {
+		super();
+	}
+	
+    public static Builder getBuilder() {
+        return new Company().new Builder();
+    }
+
 
 	public String getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
 	public String getAddress() {
 		return address;
 	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public List<Task> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
+
+	
+	public class Builder {
+		
+		public Builder setId(String id) {
+			Company.this.setId(id);
+			return this;
+		}
+		
+		public Builder setName(String name) {
+			Company.this.setName(name);
+			return this;
+		}
+		
+		public Builder setTasks(List<Task> tasks) {
+			Company.this.tasks = tasks;
+			return this;
+		}
+		
+		public Builder setAddress(String address) {
+			Company.this.address = address;
+			return this;
+		}
+		
+		
+		public Builder setDescription(String description) {
+			Company.this.description = description;
+			return this;
+		}
+		
+		public Company build() throws BuilderExeption {
+			 return Company.this;
+		}
 	}
 
 	
