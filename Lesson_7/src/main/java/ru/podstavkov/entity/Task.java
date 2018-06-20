@@ -3,8 +3,11 @@ package ru.podstavkov.entity;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +20,10 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ru.podstavkov.entity.exeption.BuilderExeption;
 import ru.podstavkov.utils.AppUtil;
@@ -39,6 +44,11 @@ public class Task extends AbstractEntity {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date publishedDate;
 	
+	@Column(name="published_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+	private Date endDate;
+	
 	
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(
@@ -46,14 +56,15 @@ public class Task extends AbstractEntity {
             joinColumns = { @JoinColumn(name = "task_id") }, 
             inverseJoinColumns = { @JoinColumn(name = "category_id") }
         )
-    @JsonIgnore
+    @JsonBackReference
     private  List<Category> category = new ArrayList();
     
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="owner_id")
+    @JsonBackReference
     private Company owner;
     
-
+ 
 	private Task() {
 		super();
 		this.active = true;
@@ -62,7 +73,6 @@ public class Task extends AbstractEntity {
     public static Builder getBuilder() {
         return new Task().new Builder();
     }
-
 
 	public String getContent() {
 		return content;
@@ -75,6 +85,8 @@ public class Task extends AbstractEntity {
 	public Company getOwner() {
 		return owner;
 	}
+	
+
 
 	public boolean isActive() {
 		return active;
@@ -84,7 +96,25 @@ public class Task extends AbstractEntity {
 		this.active = active;
 	}
 	
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+
 	public class Builder {
+		
+		
+
+		public Builder() {
+			super();
+			Task.this.publishedDate = new Date();
+		}
 
 		public Builder setId(String id) {
 			Task.this.setId(id);

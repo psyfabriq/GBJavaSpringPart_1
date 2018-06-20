@@ -6,8 +6,13 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import ru.podstavkov.entity.exeption.BuilderExeption;
 import ru.podstavkov.utils.AppUtil;
@@ -24,7 +29,8 @@ public class Company extends AbstractEntity {
 	@Column(name = "address")
 	private String address;
 
-	@OneToMany(mappedBy = "owner")
+	@OneToMany(mappedBy = "owner",fetch=FetchType.EAGER)
+	@JsonManagedReference
 	private List<Task> tasks = new ArrayList();
 	
 	private Company() {

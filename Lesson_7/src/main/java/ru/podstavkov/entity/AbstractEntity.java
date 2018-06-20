@@ -1,9 +1,12 @@
 package ru.podstavkov.entity;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author psyfabriq
@@ -18,6 +21,7 @@ public abstract class AbstractEntity {
 	private String name;
 	
 	@Column(name = "hash",unique=true, nullable=false)
+	@JsonIgnore
 	private  String hash;
 
 	public String getId() {
