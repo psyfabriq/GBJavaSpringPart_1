@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ru.podstavkov</groupId>
 	<artifactId>spring-l6</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>war</packaging>
 	<name>springmvc</name>
 	<url>https://github.com/psyfabriq/GBJavaSpringPart_1</url>
