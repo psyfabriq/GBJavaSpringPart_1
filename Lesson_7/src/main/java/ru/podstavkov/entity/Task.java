@@ -44,7 +44,7 @@ public class Task extends AbstractEntity {
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date publishedDate;
 	
-	@Column(name="published_date")
+	@Column(name="end_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
 	private Date endDate;
@@ -86,7 +86,21 @@ public class Task extends AbstractEntity {
 		return owner;
 	}
 	
-
+	public Map<String, String> getOwnerInfo() {
+		Map<String, String> info = new HashMap<String, String>();
+		info.put(owner.getId(), owner.getName());
+		return info;
+	}
+	
+	
+	public Map<String, String> getCategoryInfo() {
+		Map<String, String> info = new HashMap<String, String>();
+		for (Category item : category) {
+			info.put(item.getId(), item.getName());
+		}
+		
+		return info;
+	}
 
 	public boolean isActive() {
 		return active;
