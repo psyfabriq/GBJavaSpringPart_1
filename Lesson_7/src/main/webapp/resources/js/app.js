@@ -1,7 +1,21 @@
 var pfqApp = angular.module('pfqApp', [ 'infinite-scroll' ]);
 
-pfqApp.controller('MainController', function($scope, ListTask) {
-	$scope.listtask = new ListTask();
+pfqApp.controller('TaskController', function($scope, ListLoad) {
+	ListLoad.setURL('api/get-list-task');
+	$scope.listtask = new ListLoad();
+	console.log($scope.listtask);
+});
+
+pfqApp.controller('CompanyController', function($scope, ListLoad) {
+	ListLoad.setURL('api/get-list-company');
+	$scope.listcompany = new ListLoad();
+	console.log($scope.listcompany);
+});
+
+pfqApp.controller('CategoryController', function($scope, ListLoad) {
+	ListLoad.setURL('api/get-list-category');
+	$scope.listcategory = new ListLoad();
+	console.log($scope.listcategory);
 });
 
 pfqApp.service('ConnectService', function($q, $http) {
@@ -17,21 +31,32 @@ pfqApp.service('ConnectService', function($q, $http) {
 	}
 });
 
-pfqApp.factory('ListTask', function($http, ConnectService) {
-	var ListTask = function() {
+pfqApp.factory('ListLoad', function($http, ConnectService) {
+	var ListLoad = function() {
 		this.items = [];
 		this.busy = false;
 		this.after = '';
 	};
 
-	ListTask.prototype.nextPage = function() {
+	var baseUrl = '';
+
+	ListLoad.setURL = function(url) {
+		baseUrl = url;
+		console.log(baseUrl);
+	}
+
+	ListLoad.getTEST = function() {
+		return baseUrl;
+	}
+
+	ListLoad.prototype.nextPage = function() {
 		if (this.busy)
 			return;
 		this.busy = true;
 
 		var req = {
 			method : 'POST',
-			url : 'http://127.0.0.1:8080/podstavkov/api/get-list-task',
+			url : baseUrl,
 			headers : {
 				'Content-Type' : 'application/json'
 			},
@@ -44,10 +69,10 @@ pfqApp.factory('ListTask', function($http, ConnectService) {
 			this.busy = false;
 			var items = response;
 			for (var i = 0; i < items.length; i++) {
-				this.items.push(items[i].data);
+				this.items.push(items[i]);
 			}
-			if(this.items.length != 0){
-				//this.after = "t3_" + this.items[this.items.length - 1].id;
+			if (this.items.length != 0) {
+				// this.after = "t3_" + this.items[this.items.length - 1].id;
 			}
 			this.busy = false;
 
@@ -55,5 +80,5 @@ pfqApp.factory('ListTask', function($http, ConnectService) {
 
 	};
 
-	return ListTask;
+	return ListLoad;
 });
