@@ -7,67 +7,60 @@
 <html ng-app='pfqApp'>
 <jsp:include page="/WEB-INF/includes/head.jsp"></jsp:include>
 <body>
-	<div class="container">
-		<div class="masthead">
-			<h3 class="text-muted">
-				<c:out value="${title}" />
-			</h3>
-			<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
-		</div>
 
-		<div class="row"></div>
+	<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
 
-		<div class="jumbotron">
-			<h1>
-				<c:out value="${msg}" />
-			</h1>
-			<div  ng-controller='CategoryController'>
-				<div infinite-scroll='listcategory.nextPage()'
-					infinite-scroll-disabled='listcategory.busy'
-					infinite-scroll-distance='1'>
+	<main role="main" class="container">
+	<div class="jumbotron">
+		<h1>
+			<c:out value="${msg}" />
+		</h1>
+		<div ng-controller='CategoryController'>
+			<div infinite-scroll='listcategory.nextPage()'
+				infinite-scroll-disabled='listcategory.busy'
+				infinite-scroll-distance='1'>
 
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">Active</th>
-								<th scope="col">Name</th>
-								<th scope="col">Publish</th>
-								<th scope="col">End</th>
-								<th scope="col">Company</th>
-								<th scope="col">Category</th>
-							</tr>
-						</thead>
-						<tbody>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Active</th>
+							<th scope="col">Name</th>
+							<th scope="col">Publish</th>
+							<th scope="col">End</th>
+							<th scope="col">Company</th>
+							<th scope="col">Category</th>
+						</tr>
+					</thead>
+					<tbody>
 
 
-							<tr ng-repeat='item in listcategory.items'>
-								<th scope="row">{{$index}}</th>
-								<td>{{item.active}}</td>
-								<td>{{item.name}}</td>
-								<td>{{item.publishedDate}}</td>
-								<td>{{item.endDate}}</td>
-								<td>
-									<div ng-repeat="(index,value) in item.ownerInfo">
-										{{value}}</div>
-								</td>
-								<td>
-									<div ng-repeat="(index,value) in item.categoryInfo">
-											{{value}}
-									</div>
-								</td>
-							</tr>
+						<tr ng-repeat='item in listcategory.items'>
+							<th scope="row">{{$index}}</th>
+							<td>{{item.active}}</td>
+							<td>{{item.name}}</td>
+							<td>{{item.publishedDate}}</td>
+							<td>{{item.endDate}}</td>
+							<td>
+								<div ng-repeat="(index,value) in item.ownerInfo">
+									{{value}}</div>
+							</td>
+							<td>
+								<div ng-repeat="(index,value) in item.categoryInfo">
+									{{value}}</div>
+							</td>
+						</tr>
 
-						</tbody>
-					</table>
+					</tbody>
+				</table>
 
-					<div ng-show='listcategory.busy'>Loading data...</div>
-				</div>
+				<div ng-show='listcategory.busy'>Loading data...</div>
 			</div>
-			<p></p>
 		</div>
-
-		<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
 	</div>
+	</main>
+
+	<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
+
 </body>
 </html>

@@ -7,21 +7,43 @@
 <html ng-app='pfqApp'>
 <jsp:include page="/WEB-INF/includes/head.jsp"></jsp:include>
 <body>
-	<div class="container">
-		<div class="masthead">
-			<h3 class="text-muted">
-				<c:out value="${title}" />
-			</h3>
-			<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
-		</div>
+	<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
 
-		<div class="row"></div>
+	<div class="wrapper" ng-controller='TaskController'>
+		<jsp:include page="/WEB-INF/includes/sidebar.jsp"></jsp:include>
+		<!-- Page Content  -->
+		<main role="main" class="container-fluid">
 
 		<div class="jumbotron">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light">
+			<div class="container-fluid">
+
+				<button type="button" id="sidebarCollapse" class="btn btn-info">
+					<i class="fas fa-align-left"></i> <span>Toggle Sidebar</span>
+				</button>
+				<button class="btn btn-dark d-inline-block d-lg-none ml-auto"
+					type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<i class="fas fa-align-justify"></i>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="nav navbar-nav ml-auto">
+						<li class="nav-item active"><a class="nav-link" href="#">Page</a>
+						</li>
+						<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Page</a></li>
+					</ul>
+				</div>
+			</div>
+			</nav>
 			<h1>
 				<c:out value="${msg}" />
 			</h1>
-			<div  ng-controller='TaskController'>
+			<div>
 				<div infinite-scroll='listtask.nextPage()'
 					infinite-scroll-disabled='listtask.busy'
 					infinite-scroll-distance='1'>
@@ -39,8 +61,6 @@
 							</tr>
 						</thead>
 						<tbody>
-
-
 							<tr ng-repeat='item in listtask.items'>
 								<th scope="row">{{$index}}</th>
 								<td>{{item.active}}</td>
@@ -53,21 +73,21 @@
 								</td>
 								<td>
 									<div ng-repeat="(index,value) in item.categoryInfo">
-											{{value}}
-									</div>
+										{{value}}</div>
 								</td>
 							</tr>
 
 						</tbody>
 					</table>
-
 					<div ng-show='listtask.busy'>Loading data...</div>
 				</div>
 			</div>
-			<p></p>
 		</div>
-
-		<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
+			<jsp:include page="/WEB-INF/includes/footer.jsp"></jsp:include>
+		
+		</main>
 	</div>
+
+
 </body>
 </html>

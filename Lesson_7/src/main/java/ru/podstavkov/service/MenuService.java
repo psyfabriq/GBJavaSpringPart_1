@@ -11,7 +11,7 @@ public class MenuService {
 		List<String> list = new ArrayList<>();
 		list.add("<a class=\"nav-link\" href=\"./\">Задачи</a>");
 		list.add("<a class=\"nav-link\" href=\"./list-company\">Компании</a>");
-		list.add("<a class=\"nav-link\" href=\"./list-category\">категории</a>");
+		list.add("<a class=\"nav-link\" href=\"./list-category\">Категории</a>");
 		return list;
 	}
 }
