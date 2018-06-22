@@ -1,7 +1,6 @@
 body {
 	font-family: 'Poppins', sans-serif;
 	background: #fafafa;
-	
 	padding-top: 4.0rem;
 }
 
@@ -49,7 +48,7 @@ a, a:hover, a:focus {
 	width: 100%;
 	align-items: stretch;
 	perspective: 1500px;
-    height: 92vh;
+    min-height: 92vh;
 
 }
 

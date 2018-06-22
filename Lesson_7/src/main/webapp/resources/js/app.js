@@ -2,6 +2,7 @@ var pfqApp = angular.module('pfqApp', [ 'infinite-scroll' ]);
 
 pfqApp.controller('TaskController', function($scope, ListLoad) {
 	ListLoad.setURL('api/get-list-task');
+	//ListLoad.setData('api/get-list-task');
 	$scope.listtask = new ListLoad();
 	console.log($scope.listtask);
 });
@@ -35,14 +36,23 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 	var ListLoad = function() {
 		this.items = [];
 		this.busy = false;
+		this.load = true;
 		this.after = '';
 	};
 
 	var baseUrl = '';
+	
+	var _data = { 
+			position : 0,
+			count : 6
+	};
 
 	ListLoad.setURL = function(url) {
 		baseUrl = url;
-		console.log(baseUrl);
+	}
+	
+	ListLoad.setData = function(data) {
+		_data = data;
 	}
 
 	ListLoad.getTEST = function() {
@@ -50,7 +60,7 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 	}
 
 	ListLoad.prototype.nextPage = function() {
-		if (this.busy)
+		if (this.busy || !this.load)
 			return;
 		this.busy = true;
 
@@ -60,20 +70,21 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 			headers : {
 				'Content-Type' : 'application/json'
 			},
-			data : {
-				test : 'test'
-			}
+			data : _data
 		};
 
 		ConnectService.post(req).then(function(response) {
 			this.busy = false;
 			var items = response;
-			for (var i = 0; i < items.length; i++) {
-				this.items.push(items[i]);
+			if(items.length != 0){
+				_data.position = _data.position + items.length + 1;
+				for (var i = 0; i < items.length; i++) {
+					this.items.push(items[i]);
+				}
+			}else{
+				this.load = false;
 			}
-			if (this.items.length != 0) {
-				// this.after = "t3_" + this.items[this.items.length - 1].id;
-			}
+			
 			this.busy = false;
 
 		}.bind(this));

@@ -215,6 +215,16 @@ public class AplicationServiceImpl implements AplicationService {
 	public Collection<Task> listTask() {
 		return taskDAO.getListTask();
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Collection<Task> listTask(Map<String, Object> map) {
+		int start = (Integer)map.get("position");
+		int count = (Integer)map.get("count");
+		List<String> idsCategory = (List<String>) map.get("catgory");
+		List<String> idsCompany = (List<String>) map.get("company");
+		return taskDAO.selectListTask(start,count,idsCompany,idsCategory);
+	}
 
 	@Override
 	@Transactional(readOnly = true)

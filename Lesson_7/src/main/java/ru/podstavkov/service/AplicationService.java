@@ -28,7 +28,8 @@ public interface AplicationService {
 	
 	Collection<Category> listCategory();
 	Collection<Company>  listCompany();
-	Collection<Task>       listTask();	
+	Collection<Task>     listTask();
+	Collection<Task>     listTask(Map<String, Object> map);	
 	
 	Collection<Task>       getListTaskByCategory(String category_id);
 	Collection<Task>       getListTaskByCategory(Category category);

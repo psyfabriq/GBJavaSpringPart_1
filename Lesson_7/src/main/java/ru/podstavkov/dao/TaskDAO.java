@@ -9,6 +9,9 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,18 @@ public class TaskDAO extends AbstractDAO{
 	public List<Task> getListTask() {
 
 		return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
+	}
+	
+	public List<Task> selectListTask(int start, int count, List<String> idsCompany, List<String> idsCategory) {
+		
+		Session session = em.unwrap(Session.class);		
+		Criteria c = session.createCriteria(Task.class);
+		c.setFirstResult(start);
+		c.setMaxResults(count);
+		//c.addOrder(Order.desc("published_date"));
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;
+		return c.list();
+		//return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
 	}
 
 	public Task merge(Task task) {

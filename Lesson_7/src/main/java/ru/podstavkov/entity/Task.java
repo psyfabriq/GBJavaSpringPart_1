@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -57,6 +60,7 @@ public class Task extends AbstractEntity {
             inverseJoinColumns = { @JoinColumn(name = "category_id") }
         )
     @JsonBackReference
+    @Fetch (FetchMode.SELECT)
     private  List<Category> category = new ArrayList();
     
     @ManyToOne(fetch=FetchType.EAGER)
