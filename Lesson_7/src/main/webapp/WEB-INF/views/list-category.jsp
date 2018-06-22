@@ -15,6 +15,14 @@
 		<h1>
 			<c:out value="${msg}" />
 		</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+
+			<button type="button" class="btn  btn-outline-success">
+				<i class="fas fa-plus-circle"></i> <span></span>
+			</button>
+		</div>
+		</nav>
 		<div ng-controller='CategoryController'>
 			<div infinite-scroll='listcategory.nextPage()'
 				infinite-scroll-disabled='listcategory.busy'
@@ -24,31 +32,13 @@
 					<thead>
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">Active</th>
 							<th scope="col">Name</th>
-							<th scope="col">Publish</th>
-							<th scope="col">End</th>
-							<th scope="col">Company</th>
-							<th scope="col">Category</th>
 						</tr>
 					</thead>
 					<tbody>
-
-
 						<tr ng-repeat='item in listcategory.items'>
 							<th scope="row">{{$index}}</th>
-							<td>{{item.active}}</td>
 							<td>{{item.name}}</td>
-							<td>{{item.publishedDate}}</td>
-							<td>{{item.endDate}}</td>
-							<td>
-								<div ng-repeat="(index,value) in item.ownerInfo">
-									{{value}}</div>
-							</td>
-							<td>
-								<div ng-repeat="(index,value) in item.categoryInfo">
-									{{value}}</div>
-							</td>
 						</tr>
 
 					</tbody>

@@ -2,6 +2,7 @@ package ru.podstavkov.service;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Set;
 
 import ru.podstavkov.entity.Task;
 import ru.podstavkov.entity.Category;
@@ -29,7 +30,7 @@ public interface AplicationService {
 	Collection<Category> listCategory();
 	Collection<Company>  listCompany();
 	Collection<Task>     listTask();
-	Collection<Task>     listTask(Map<String, Object> map);	
+	Set<Task>     listTask(Map<String, Object> map);	
 	
 	Collection<Task>       getListTaskByCategory(String category_id);
 	Collection<Task>       getListTaskByCategory(Category category);

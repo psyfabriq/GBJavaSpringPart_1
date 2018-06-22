@@ -29,24 +29,24 @@ public class TestContextAnnotation {
 	        ObjectNode objectNodeCategory = mapper.createObjectNode();
 	        objectNodeCategory.put("name", "Test Category 2");
 	        
-	      // Assert.assertNotNull(tservice.createCategory(AppUtil.getValues(objectNodeCategory.toString())));
+	       //Assert.assertNotNull(tservice.createCategory(AppUtil.getValues(objectNodeCategory.toString())));
 	        
 	        ObjectNode objectNodeCompany = mapper.createObjectNode();
-	        objectNodeCompany.put("name", "GOODS COMPANY");
-	        objectNodeCompany.put("address", "LONDON");
-	        objectNodeCompany.put("description", "litle company ))))");
+	        objectNodeCompany.put("name", "BADS COMPANY");
+	        objectNodeCompany.put("address", "GERMANY");
+	        objectNodeCompany.put("description", "big company ))))");
 	        
 	       // Assert.assertNotNull(tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString())));
 	        
 	        ObjectNode objectNodeTask  = mapper.createObjectNode();
 
-	        objectNodeTask.put("name", "task 5");
+	        objectNodeTask.put("name", "task 3G");
 	        objectNodeTask.put("content", "some text : ))))))");
-	        objectNodeTask.put("owner_id", "6a01ba91-91f7-4974-bd4f-372f75cb2647");
+	        objectNodeTask.put("owner_id", "e21e2b27-bb08-4e72-8dc8-d3f700082dcc");
 	        
 	        ArrayNode arrayCategoriesID = objectNodeTask.putArray("category_id");
-	        //arrayCategoriesID.add("292f250a-a4b4-4ce5-b7d7-2ebf0319f818");
-	        arrayCategoriesID.add("95537922-1be9-49cb-bb6c-e8eae1d85761");
+	        //arrayCategoriesID.add("2632517a-61b6-4d6d-bc9d-19628e539f05");
+	        arrayCategoriesID.add("866983ae-5b1b-4004-a75c-d7f9556bf27f");
 	        
 
 	        Assert.assertNotNull(tservice.createTask(AppUtil.getValues(objectNodeTask.toString())));

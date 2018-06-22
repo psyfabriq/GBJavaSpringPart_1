@@ -1,6 +1,7 @@
 package ru.podstavkov.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,6 +64,6 @@ public interface APIController {
     
     @RequestMapping(value = "/get-list-task", method = RequestMethod.POST,headers="Accept=*/*",consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<List<Task>> getListTask(@RequestBody String json, HttpServletResponse response);
+    public ResponseEntity<Set<Task>> getListTask(@RequestBody String json, HttpServletResponse response);
 
 }

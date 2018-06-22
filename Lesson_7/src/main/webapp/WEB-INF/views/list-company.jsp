@@ -15,6 +15,14 @@
 		<h1>
 			<c:out value="${msg}" />
 		</h1>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container-fluid">
+
+			<button type="button" class="btn  btn-outline-success">
+				<i class="fas fa-plus-circle"></i> <span></span>
+			</button>
+		</div>
+		</nav>
 		<div ng-controller='CompanyController'>
 			<div infinite-scroll='listcompany.nextPage()'
 				infinite-scroll-disabled='listcompany.busy'
@@ -24,12 +32,9 @@
 					<thead>
 						<tr>
 							<th scope="col">#</th>
-							<th scope="col">Active</th>
 							<th scope="col">Name</th>
-							<th scope="col">Publish</th>
-							<th scope="col">End</th>
-							<th scope="col">Company</th>
-							<th scope="col">Category</th>
+							<th scope="col">Address</th>
+							<th scope="col">Description</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -37,18 +42,9 @@
 
 						<tr ng-repeat='item in listcompany.items'>
 							<th scope="row">{{$index}}</th>
-							<td>{{item.active}}</td>
 							<td>{{item.name}}</td>
-							<td>{{item.publishedDate}}</td>
-							<td>{{item.endDate}}</td>
-							<td>
-								<div ng-repeat="(index,value) in item.ownerInfo">
-									{{value}}</div>
-							</td>
-							<td>
-								<div ng-repeat="(index,value) in item.categoryInfo">
-									{{value}}</div>
-							</td>
+							<td>{{item.address}}</td>
+							<td>{{item.description}}</td>
 						</tr>
 
 					</tbody>

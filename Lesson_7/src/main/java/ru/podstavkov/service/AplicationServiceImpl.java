@@ -4,6 +4,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -218,11 +220,13 @@ public class AplicationServiceImpl implements AplicationService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<Task> listTask(Map<String, Object> map) {
+	public Set<Task> listTask(Map<String, Object> map) {
 		int start = (Integer)map.get("position");
 		int count = (Integer)map.get("count");
-		List<String> idsCategory = (List<String>) map.get("catgory");
-		List<String> idsCompany = (List<String>) map.get("company");
+		List<String> lCategory = (List<String>)map.get("selectedCategory");
+		List<String> lCompany  = (List<String>) map.get("selectedCompany");
+		Optional<List<String>> idsCategory = Optional.ofNullable(!lCategory.isEmpty()?lCategory:null);
+		Optional<List<String>> idsCompany = Optional.ofNullable(!lCompany.isEmpty()?lCompany:null);
 		return taskDAO.selectListTask(start,count,idsCompany,idsCategory);
 	}
 

@@ -2,6 +2,7 @@ package ru.podstavkov.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -103,10 +104,10 @@ public class APIControllerImpl implements APIController {
 	}
 
 	@Override
-	public ResponseEntity<List<Task>> getListTask(@RequestBody String json, HttpServletResponse response) {
+	public ResponseEntity<Set<Task>> getListTask(@RequestBody String json, HttpServletResponse response) {
 		map = AppUtil.getValues(json);
 		System.out.println(map);
- 		return new ResponseEntity<List<Task>>((List<Task>)aplicationService.listTask(map), head, HttpStatus.OK);
+ 		return new ResponseEntity<Set<Task>>(aplicationService.listTask(map), head, HttpStatus.OK);
 
 	}
 

@@ -1,8 +1,20 @@
 var pfqApp = angular.module('pfqApp', [ 'infinite-scroll' ]);
 
 pfqApp.controller('TaskController', function($scope, ListLoad) {
+	
+	$scope.filterData = {
+			position : 0,
+			count : 10,
+			selectedCompany : [],
+			selectedCategory : []
+	};
+	
+	$scope.filter = {
+		company : [{id : '', name : 'ALL'}],
+		category : [{id : '', name : 'ALL'}]
+	};
+	ListLoad.setData($scope.filterData);
 	ListLoad.setURL('api/get-list-task');
-	//ListLoad.setData('api/get-list-task');
 	$scope.listtask = new ListLoad();
 	console.log($scope.listtask);
 });
