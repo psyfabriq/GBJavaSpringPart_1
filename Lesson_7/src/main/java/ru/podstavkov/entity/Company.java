@@ -33,10 +33,7 @@ public class Company extends AbstractEntity {
 	@JsonManagedReference
 	private List<Task> tasks = new ArrayList();
 	
-	private Company() {
-		super();
-	}
-	
+
     public static Builder getBuilder() {
         return new Company().new Builder();
     }
@@ -52,9 +49,32 @@ public class Company extends AbstractEntity {
 	public List<Task> getTasks() {
 		return tasks;
 	}
-
-
 	
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public Company rebild() throws BuilderExeption, NoSuchAlgorithmException {
+		
+		if ("".equals(this.getName())||this.getName() == null) {
+			throw new BuilderExeption("Name Company coud`t  be empty!");
+		}
+		
+		this.setHash(AppUtil.hashString(this.getName()));
+
+		return this;
+	}
+
+
 	public class Builder {
 		
 		public Builder setId(String id) {
@@ -83,17 +103,17 @@ public class Company extends AbstractEntity {
 			return this;
 		}
 		
-		public Company build() throws BuilderExeption, NoSuchAlgorithmException {
-			
-			if ("".equals(Company.this.getName())||Company.this.getName() == null) {
-				throw new BuilderExeption("Name Company coud`t  be empty!");
-			}
-			
-			Company.this.setHash(AppUtil.hashString(Company.this.getName()));
-
-			 return Company.this;
+		public Company build() throws BuilderExeption, NoSuchAlgorithmException {	
+			return Company.this.rebild();
 		}
 	}
 
+
+	@Override
+	public String toString() {
+		return "Name: "+ getName()+" Address: "+getAddress()+" Description: "+getDescription();
+	}
+
+	
 	
 }

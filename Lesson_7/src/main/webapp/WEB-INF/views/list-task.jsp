@@ -21,9 +21,9 @@
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
 			
-				<button type="button"  class="btn  btn-outline-success">
+				<a type="button" href= "<c:url value="/company/add" />" class="btn  btn-outline-success">
 					<i class="fas fa-plus-circle"></i> <span></span>
-				</button>
+				</a>
 			</div>
 			</nav>
 			<div>

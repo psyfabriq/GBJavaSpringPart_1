@@ -4,6 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><c:out value="${title}"/></title>
 <c:forEach items="${css}" var="url">
-   <link href="${url}" rel="stylesheet">
+   <link href="<c:url value="${url}" />" rel="stylesheet">
 </c:forEach>
 </head>

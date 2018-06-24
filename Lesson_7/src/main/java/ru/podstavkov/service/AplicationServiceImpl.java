@@ -2,6 +2,7 @@ package ru.podstavkov.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,6 +54,12 @@ public class AplicationServiceImpl implements AplicationService {
 			return null;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public Category createCategory(Category category) {
+		return categoryDAO.merge(category);
+	}
 
 	@Override
 	@Transactional(readOnly = false)
@@ -74,6 +81,13 @@ public class AplicationServiceImpl implements AplicationService {
 			return null;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = false)
+	public Company createCompany(Company company) {
+			return companyDAO.merge(company);
+	}
+	
 
 	@Override
 	@Transactional(readOnly = false)
@@ -220,7 +234,7 @@ public class AplicationServiceImpl implements AplicationService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Task> listTask(Map<String, Object> map) {
+	public List<Task> listTask(Map<String, Object> map) {
 		int start = (Integer)map.get("position");
 		int count = (Integer)map.get("count");
 		List<String> lCategory = (List<String>)map.get("selectedCategory");
@@ -258,6 +272,12 @@ public class AplicationServiceImpl implements AplicationService {
 	@Transactional(readOnly = true)
 	public List<Category> getlistCategoryByIDs(String... ids) {
 		return categoryDAO.getCategoryById(ids);
+	}
+
+	@Override
+	public void cleanAll() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

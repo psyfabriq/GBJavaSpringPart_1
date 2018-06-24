@@ -104,10 +104,10 @@ public class APIControllerImpl implements APIController {
 	}
 
 	@Override
-	public ResponseEntity<Set<Task>> getListTask(@RequestBody String json, HttpServletResponse response) {
+	public ResponseEntity<List<Task>> getListTask(@RequestBody String json, HttpServletResponse response) {
 		map = AppUtil.getValues(json);
 		System.out.println(map);
- 		return new ResponseEntity<Set<Task>>(aplicationService.listTask(map), head, HttpStatus.OK);
+ 		return new ResponseEntity<List<Task>>(aplicationService.listTask(map), head, HttpStatus.OK);
 
 	}
 

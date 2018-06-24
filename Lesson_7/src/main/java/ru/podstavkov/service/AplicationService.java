@@ -1,6 +1,7 @@
 package ru.podstavkov.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,7 +12,9 @@ import ru.podstavkov.entity.Company;
 public interface AplicationService {
 	
 	Category createCategory(Map<String, Object> map);
+	Category createCategory(Category category);
 	Company createCompany(Map<String, Object> map);
+	Company createCompany(Company company);
 	Task createTask(Map<String, Object> map);
 	
 	boolean deleteCategory(String id);
@@ -30,7 +33,7 @@ public interface AplicationService {
 	Collection<Category> listCategory();
 	Collection<Company>  listCompany();
 	Collection<Task>     listTask();
-	Set<Task>     listTask(Map<String, Object> map);	
+	List<Task>     listTask(Map<String, Object> map);	
 	
 	Collection<Task>       getListTaskByCategory(String category_id);
 	Collection<Task>       getListTaskByCategory(Category category);
@@ -38,5 +41,7 @@ public interface AplicationService {
 	
 	Company getCompanyByTask(String ad_id);
 	Company getCompanyByTask(Task task);
+	
+	void cleanAll();
 	
 }

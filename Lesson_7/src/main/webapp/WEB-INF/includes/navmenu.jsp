@@ -14,8 +14,8 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<c:forEach items="${navigatemenu}" var="url">
-				<li class="nav-item ">${url}</li>
+			<c:forEach items="${navigatemenu}" var="item">
+			<li class="nav-item "><a class="nav-link" href="<c:url value="${item.url}" />"><c:out value="${item.name}"/></a></li>
 			</c:forEach>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">

@@ -140,7 +140,7 @@
 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:185)
 	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:212)
 	at com.sun.proxy.$Proxy51.createTask(Unknown Source)
-	at ru.podstavkov.TestContextAnnotation.test(TestContextAnnotation.java:52)
+	at ru.podstavkov.TestContextAnnotation.test(TestContextAnnotation.java:93)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -190,7 +190,7 @@ Caused by: org.hibernate.exception.ConstraintViolationException: could not execu
 	at org.hibernate.jpa.internal.TransactionImpl.commit(TransactionImpl.java:61)
 	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:536)
 	... 34 more
-Caused by: java.sql.BatchUpdateException: Duplicate entry &apos;641a89397a07d00b79f499a110ed6689f30ccc15a20c8448961fb4765e024f65&apos; for key &apos;UK_d3ce4wt6x1v04wy5qvjyd1e9j&apos;
+Caused by: java.sql.BatchUpdateException: Duplicate entry &apos;ce426f3aaff617797642a18e9b94c3b6f97e87907775e7a843f54df7cb791433&apos; for key &apos;UK_d3ce4wt6x1v04wy5qvjyd1e9j&apos;
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -203,7 +203,7 @@ Caused by: java.sql.BatchUpdateException: Duplicate entry &apos;641a89397a07d00b
 	at com.mysql.jdbc.StatementImpl.executeBatch(StatementImpl.java:970)
 	at org.hibernate.engine.jdbc.batch.internal.BatchingBatch.performExecution(BatchingBatch.java:110)
 	... 52 more
-Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry &apos;641a89397a07d00b79f499a110ed6689f30ccc15a20c8448961fb4765e024f65&apos; for key &apos;UK_d3ce4wt6x1v04wy5qvjyd1e9j&apos;
+Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException: Duplicate entry &apos;ce426f3aaff617797642a18e9b94c3b6f97e87907775e7a843f54df7cb791433&apos; for key &apos;UK_d3ce4wt6x1v04wy5qvjyd1e9j&apos;
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
 	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
@@ -229,7 +229,7 @@ Caused by: com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationExce
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">/tmp/testng-eclipse-1341088421/testng-customsuite.xml</span>
+            <span class="header-content">/tmp/testng-eclipse-1401036613/testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -282,7 +282,7 @@ data.addRows(1);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'test')
 data.setCell(0, 2, 'ru.podstavkov.TestContextAnnotation')
-data.setCell(0, 3, 2498);
+data.setCell(0, 3, 2311);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }

@@ -35,6 +35,17 @@ public class Category extends AbstractEntity {
 	public List<Task> getTasks() {
 		return tasks;
 	}
+	
+	public Category rebuild() throws BuilderExeption, NoSuchAlgorithmException {
+		
+		if ("".equals(this.getName())||this.getName() == null) {
+			throw new BuilderExeption("Name Category coud`t  be empty!");
+		}
+		
+		this.setHash(AppUtil.hashString(this.getName()));
+		
+		return Category.this;
+	}
 
 	public class Builder {
 		
@@ -54,14 +65,7 @@ public class Category extends AbstractEntity {
 		}
 
 		public Category build() throws BuilderExeption, NoSuchAlgorithmException {
-			
-			if ("".equals(Category.this.getName())||Category.this.getName() == null) {
-				throw new BuilderExeption("Name Category coud`t  be empty!");
-			}
-			
-			Category.this.setHash(AppUtil.hashString(Category.this.getName()));
-			
-			return Category.this;
+			return Category.this.rebuild();
 		}
 	}
 

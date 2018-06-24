@@ -18,9 +18,9 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 
-			<button type="button" class="btn  btn-outline-success">
-				<i class="fas fa-plus-circle"></i> <span></span>
-			</button>
+				<a type="button" href= "<c:url value="/company/add" />" class="btn  btn-outline-success">
+					<i class="fas fa-plus-circle"></i> <span></span>
+				</a>
 		</div>
 		</nav>
 		<div ng-controller='CompanyController'>
@@ -34,7 +34,7 @@
 							<th scope="col">#</th>
 							<th scope="col">Name</th>
 							<th scope="col">Address</th>
-							<th scope="col">Description</th>
+							<th scope="col">Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -44,7 +44,7 @@
 							<th scope="row">{{$index}}</th>
 							<td>{{item.name}}</td>
 							<td>{{item.address}}</td>
-							<td>{{item.description}}</td>
+							<td>{{item.address}}</td>
 						</tr>
 
 					</tbody>

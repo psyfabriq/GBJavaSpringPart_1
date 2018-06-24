@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResourcesService {
 	
-	private final String res = "./resources/";
+	private final String res = "/resources/";
 
 	public List<String> getListCSS() {
 		List<String> list = new ArrayList<>();	

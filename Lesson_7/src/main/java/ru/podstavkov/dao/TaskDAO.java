@@ -32,7 +32,7 @@ public class TaskDAO extends AbstractDAO{
 		return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
 	}
 	
-	public Set<Task> selectListTask(int start, int count, Optional<List<String>>  idsCompany, Optional<List<String>> idsCategory) {
+	public List<Task> selectListTask(int start, int count, Optional<List<String>>  idsCompany, Optional<List<String>> idsCategory) {
 		
 		Session session = em.unwrap(Session.class);		
 		Criteria c = session.createCriteria(Task.class);
@@ -49,11 +49,14 @@ public class TaskDAO extends AbstractDAO{
 			c.createAlias("owner", "companyAlias");
 		
 		
-		idsCategory.ifPresent(v -> v.forEach(e -> { c.add(Restrictions.eq("categoryAlias.id", e)); }));
-		idsCompany.ifPresent(v -> v.forEach(e -> {c.add(Restrictions.in("companyAlias.id", e));}));
+		idsCategory.ifPresent(v -> {c.add(Restrictions.eq("categoryAlias.id", v));});
+		idsCompany.ifPresent(v -> {c.add(Restrictions.in("companyAlias.id", v));});
+		
+		//idsCategory.ifPresent(v -> v.forEach(e -> { c.add(Restrictions.eq("categoryAlias.id", e)); }));
+		//idsCompany.ifPresent(v -> v.forEach(e -> {c.add(Restrictions.in("companyAlias.id", e));}));
 		
 		
-		return new HashSet<Task>(c.list());
+		return new ArrayList<Task>(c.list());
 		//return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
 	}
 

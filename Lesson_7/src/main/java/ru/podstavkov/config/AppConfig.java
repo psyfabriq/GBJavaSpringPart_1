@@ -41,7 +41,8 @@ public class AppConfig implements WebMvcConfigurer{
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(
 			@Qualifier("dataSource") DataSource dataSource, @Value("${hibernate.max_fetch_depth}") String maxFetchDepth,
 			@Value("${hibernate.jdbc.fetch_size}") String fetchSize,
-			@Value("${hibernate.jdbc.batch_size}") String batchSize, @Value("${hibernate.show_sql}") String showSql,
+			@Value("${hibernate.jdbc.batch_size}") String batchSize,
+			@Value("${hibernate.show_sql}") String showSql,
 			@Value("${hibernate.hb2ddl.auto}") String hb2ddl
 
 	) {
