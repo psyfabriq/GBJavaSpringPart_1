@@ -42,8 +42,8 @@
 						<tr ng-repeat='item in listcategory.items'>
 							<th scope="row">{{$index}}</th>
 							<td>{{item.name}}</td>
-							<td><a href="{{baseUrl}}/category/{{item.id}}/edit"
-								type="button" class="btn btn-primary ">Edit</a></td>
+							<td><a href="{{baseUrl}}/category/{{item.id}}"
+								type="button" class="btn btn-primary ">Open</a></td>
 						</tr>
 
 					</tbody>

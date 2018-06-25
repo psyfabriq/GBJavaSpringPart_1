@@ -65,4 +65,19 @@ public class CategoryController extends AbstractController {
 
 		return new ModelAndView("redirect:/category/" + res.getId());
 	}
+	
+	@RequestMapping(value = "/category/edit", method = RequestMethod.POST)
+	public ModelAndView edit(@Valid @ModelAttribute("category") Category category, BindingResult result,
+			ModelMap model) {
+		if (result.hasErrors()) {
+			return new ModelAndView("error");
+		}
+		try {
+			category.rebuild();
+		} catch (NoSuchAlgorithmException | BuilderExeption e) {
+			return new ModelAndView("error");
+		}
+		aplicationService.updateCategory(category);
+		return new ModelAndView("redirect:/category/" + category.getId());
+	}
 }

@@ -58,7 +58,7 @@ public class CompanyController extends AbstractController {
 			return new ModelAndView("error");
 		}
 		try {
-			company.rebild();
+			company.rebuild();
 		} catch (NoSuchAlgorithmException | BuilderExeption e) {
 			return new ModelAndView("error");
 		}
@@ -68,6 +68,19 @@ public class CompanyController extends AbstractController {
 		return new ModelAndView("redirect:/company/"+res.getId());
 	}
 	
+	@RequestMapping(value = "/company/edit", method = RequestMethod.POST)
+	public ModelAndView edit(@Valid @ModelAttribute("company") Company company, BindingResult result, ModelMap model) {
+		if (result.hasErrors()) {
+			return new ModelAndView("error");
+		}
+		try {
+			company.rebuild();
+		} catch (NoSuchAlgorithmException | BuilderExeption e) {
+			return new ModelAndView("error");
+		}
+		aplicationService.updateCompany(company);
+		return new ModelAndView("redirect:/company/"+company.getId());
+	}
 	
 
 }

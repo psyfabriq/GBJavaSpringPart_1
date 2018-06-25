@@ -19,7 +19,7 @@
 			</c:forEach>
 		</ul>
 		<form class="form-inline my-2 my-lg-0">
-			<select class="selectpicker" data-width="fit">
+			<select class="mdb-select" >
 				<option
 					data-content='<span class="flag-icon flag-icon-us"></span> English'>English</option>
 				<option

@@ -21,6 +21,8 @@ public class MainController extends AbstractController{
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listTask(Model model) {
       model.addAttribute("msg", "List of Task");	
+      model.addAttribute("categories",aplicationService.listCategory());
+      model.addAttribute("companes",aplicationService.listCompany());
       return "list-task";
     }
     

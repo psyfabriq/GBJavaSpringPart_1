@@ -17,23 +17,19 @@
 		<h1>
 			<c:out value="${msg}" />
 		</h1>
-		
-				<form:form method="POST"
-			action="${pageContext.request.contextPath}/category/add"
+
+		<form:form method="POST"
+			action="${pageContext.request.contextPath}${postUrl}"
 			modelAttribute="category">
 
-			<table>
-				<tr>
-					<td><form:label path="name">Name</form:label></td>
-					<td><form:input path="name" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="${submitTitle}" /></td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<form:label for="usr" path="name">Name:</form:label> 
+				<form:input type="text" path="name" class="form-control" id="usr"/>
+			</div>
+			<input type="submit"  class="btn btn-info" value="${submitTitle}" />
 
 		</form:form>
-		
+
 	</div>
 	</main>
 

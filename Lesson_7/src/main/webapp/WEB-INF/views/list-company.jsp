@@ -47,8 +47,8 @@
 							<th scope="row">{{$index}}</th>
 							<td>{{item.name}}</td>
 							<td>{{item.address}}</td>
-							<td><a href="{{baseUrl}}/company/{{item.id}}/edit"
-								type="button" class="btn btn-primary ">Edit</a></td>
+							<td><a href="{{baseUrl}}/company/{{item.id}}"
+								type="button" class="btn btn-primary ">Open</a></td>
 						</tr>
 
 					</tbody>

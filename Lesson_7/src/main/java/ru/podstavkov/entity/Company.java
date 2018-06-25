@@ -63,7 +63,7 @@ public class Company extends AbstractEntity {
 		this.tasks = tasks;
 	}
 
-	public Company rebild() throws BuilderExeption, NoSuchAlgorithmException {
+	public Company rebuild() throws BuilderExeption, NoSuchAlgorithmException {
 		
 		if ("".equals(this.getName())||this.getName() == null) {
 			throw new BuilderExeption("Name Company coud`t  be empty!");
@@ -104,7 +104,7 @@ public class Company extends AbstractEntity {
 		}
 		
 		public Company build() throws BuilderExeption, NoSuchAlgorithmException {	
-			return Company.this.rebild();
+			return Company.this.rebuild();
 		}
 	}
 

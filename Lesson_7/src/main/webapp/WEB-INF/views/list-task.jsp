@@ -63,7 +63,7 @@
 									<div ng-repeat="(index,value) in item.categoryInfo">
 										{{value}}</div>
 								</td>
-								<td><a href="{{baseUrl}}/task/{{item.id}}/edit" type="button" class="btn btn-primary ">Edit</a></td>
+								<td><a href="{{baseUrl}}/task/{{item.id}}" type="button" class="btn btn-primary ">Open</a></td>
 
 							</tr>
 

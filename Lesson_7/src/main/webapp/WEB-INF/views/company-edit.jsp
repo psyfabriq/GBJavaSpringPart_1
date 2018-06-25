@@ -17,26 +17,23 @@
 		</h1>
 
 		<form:form method="POST"
-			action="${pageContext.request.contextPath}/company/add"
+			action="${pageContext.request.contextPath}${postUrl}"
 			modelAttribute="company">
 
-			<table>
-				<tr>
-					<td><form:label path="name">Name</form:label></td>
-					<td><form:input path="name" /></td>
-				</tr>
-				<tr>
-					<td><form:label path="address">Address</form:label></td>
-					<td><form:input path="address" /></td>
-				</tr>
-				<tr>
-					<td><form:label path="description">Description</form:label></td>
-					<td><form:input path="description" /></td>
-				</tr>
-				<tr>
-					<td><input type="submit" value="${submitTitle}" /></td>
-				</tr>
-			</table>
+			<div class="form-group">
+				<form:label for="usr" path="name">Name:</form:label>
+				<form:input type="text" path="name" class="form-control" id="usr" />
+			</div>
+			<div class="form-group">
+				<form:label for="adr" path="address">Address:</form:label>
+				<form:input type="text" path="address" class="form-control" id="adr" />
+			</div>
+			<div class="form-group">
+				<form:label for="des" path="description">Description:</form:label>
+				<form:textarea rows="5" path="description" class="form-control" id="des" />
+			</div>
+			<input type="submit" class="btn btn-info" value="${submitTitle}" />
+
 
 		</form:form>
 

@@ -16,6 +16,7 @@ public interface AplicationService {
 	Company createCompany(Map<String, Object> map);
 	Company createCompany(Company company);
 	Task createTask(Map<String, Object> map);
+	Task createTask(Task task);
 	
 	boolean deleteCategory(String id);
 	boolean deleteCompany(String id);
@@ -24,6 +25,10 @@ public interface AplicationService {
 	void updateCategory(Map<String, Object> map);
 	void updateCompany(Map<String, Object> map);
 	void updateTask(Map<String, Object> map);
+	
+	void updateCategory(Category category);
+	void updateCompany(Company company);
+	void updateTask(Task task);
 	
 	Category getCategory(String id);
 	Company getCompany (String id);

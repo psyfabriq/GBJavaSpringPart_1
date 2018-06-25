@@ -69,7 +69,7 @@ public class Task extends AbstractEntity {
     private Company owner;
     
  
-	private Task() {
+	public Task() {
 		super();
 		this.active = true;
 	}
@@ -123,6 +123,25 @@ public class Task extends AbstractEntity {
 		return endDate;
 	}
 
+	public Task rebuild() throws BuilderExeption, NoSuchAlgorithmException {
+		
+		if ("".equals(this.getName())||this.getName() == null) {
+			throw new BuilderExeption("Name Task coud`t  be empty!");
+		}
+		
+		if (this.owner == null) {
+			throw new BuilderExeption("Not set Owner!");
+		}
+		
+		if (this.category == null || this.category.size() == 0 ) {
+			throw new BuilderExeption("Not set Category!");
+		}
+		
+		this.setHash(AppUtil.hashString(this.getName()+this.getOwner().getId()));
+		
+		
+		 return this;
+	}
 
 
 	public class Builder {
@@ -160,23 +179,8 @@ public class Task extends AbstractEntity {
 		}
 		
 		public Task build() throws BuilderExeption, NoSuchAlgorithmException {
-			
-			if ("".equals(Task.this.getName())||Task.this.getName() == null) {
-				throw new BuilderExeption("Name Task coud`t  be empty!");
-			}
-			
-			if (Task.this.owner == null) {
-				throw new BuilderExeption("Not set Owner!");
-			}
-			
-			if (Task.this.category == null || Task.this.category.size() == 0 ) {
-				throw new BuilderExeption("Not set Category!");
-			}
-			
-			Task.this.setHash(AppUtil.hashString(Task.this.getName()+Task.this.getOwner().getId()));
-			
-			
-			 return Task.this;
+		
+			 return Task.this.rebuild();
 		}
 	}
 	
