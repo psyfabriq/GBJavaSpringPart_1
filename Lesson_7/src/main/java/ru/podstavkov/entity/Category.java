@@ -24,9 +24,6 @@ public class Category extends AbstractEntity {
 			@JoinColumn(name = "task_id") })
 	private List<Task> tasks = new ArrayList();
 	
-	private Category() {
-		super();
-	}
 	
 	public static Builder getBuilder() {
 		return new Category().new Builder();

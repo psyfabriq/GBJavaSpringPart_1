@@ -1,35 +1,53 @@
 var pfqApp = angular.module('pfqApp', [ 'infinite-scroll' ]);
 
-pfqApp.controller('TaskController', function($scope, ListLoad) {
-	
+pfqApp.controller('TaskController', function($scope, $timeout, ListLoad) {
+	$scope.baseUrl = '';
 	$scope.filterData = {
 			position : 0,
 			count : 10,
 			selectedCompany : [],
 			selectedCategory : []
 	};
-	
 	$scope.filter = {
 		company : [{id : '', name : 'ALL'}],
 		category : [{id : '', name : 'ALL'}]
 	};
 	ListLoad.setData($scope.filterData);
 	ListLoad.setURL('api/get-list-task');
-	$scope.listtask = new ListLoad();
-	console.log($scope.listtask);
+	$scope.listtask = new ListLoad();	
 });
 
-pfqApp.controller('CompanyController', function($scope, ListLoad) {
+pfqApp.controller('CompanyController', function($scope, $timeout, ListLoad) {
+	$scope.baseUrl = '';
 	ListLoad.setURL('api/get-list-company');
 	$scope.listcompany = new ListLoad();
-	console.log($scope.listcompany);
 });
 
-pfqApp.controller('CategoryController', function($scope, ListLoad) {
+pfqApp.controller('CategoryController', function($scope, $timeout,ListLoad) {
+	$scope.baseUrl = '';
 	ListLoad.setURL('api/get-list-category');
 	$scope.listcategory = new ListLoad();
-	console.log($scope.listcategory);
 });
+
+pfqApp.directive('baseUrl',
+		  function($timeout) {
+		    return {
+		      restrict: 'EAC',
+		      template: '',
+		      scope: {
+		        model: '=model',
+		        url: '@'
+		      },
+		      link: function($scope, element) {
+		        function setBaseUrl() {
+		            $scope.model = $scope.url;
+		        }
+		        setBaseUrl();
+
+		      }
+		    };
+		  }
+		);
 
 pfqApp.service('ConnectService', function($q, $http) {
 	this.post = function(req) {

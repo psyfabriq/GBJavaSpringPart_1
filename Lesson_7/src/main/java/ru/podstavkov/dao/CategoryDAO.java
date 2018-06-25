@@ -9,6 +9,9 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,23 +37,21 @@ public class CategoryDAO extends AbstractDAO {
 			return;
 		
 		    CriteriaBuilder cb = this.em.getCriteriaBuilder();
-	        // create update
 	        CriteriaUpdate<Category> update = cb.createCriteriaUpdate(Category.class);
 	        Root e = update.from(Category.class);
-	        // set update and where clause
 	        update.set("name", category.getName());
-	        //update.set("amount", company.getTasks());
 	        update.where(cb.greaterThanOrEqualTo(e.get("id"), category.getId()));
-	        // perform update
 	        this.em.createQuery(update).executeUpdate();
 	}
 
 	public List<Category> getCategoryById(String ...id) {
 		if (id == null)
 			return null;
-		
-		List<Category> category = em.createQuery("SELECT e FROM Category e WHERE e.id IN :ids",Category.class).setParameter("ids", new ArrayList<>(Arrays.asList(id))).getResultList();
-		return category;
+		Session session = em.unwrap(Session.class);		
+		Criteria c = session.createCriteria(Category.class);
+		c.setMaxResults(1);
+		c.add(Restrictions.in("id",Arrays.asList(id)));
+		return c.list();
 	}
 
 	public void removeCategory(Category category) {

@@ -21,27 +21,37 @@ import ru.podstavkov.entity.exeption.BuilderExeption;
 
 @Controller
 public class CategoryController extends AbstractController {
-	
-    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-    public String getCategory(HttpServletRequest request, HttpServletResponse response,ModelMap model, @PathVariable String id) {
-      model.addAttribute("msg", "Info Category");	
-      return "category";
-    }
-    
-    @RequestMapping(value = "/category/{id}/edit", method = RequestMethod.GET)
-    public String getCategoryEdit(HttpServletRequest request, HttpServletResponse response,ModelMap model, @PathVariable String id) {
-      model.addAttribute("msg", "Edit Category");	
-      return "category-edit";
-    }
-    
-    @RequestMapping(value = "/category/add", method = RequestMethod.GET)
-    public String getCategoryAdd(HttpServletRequest request, HttpServletResponse response,ModelMap model) {
-      model.addAttribute("msg", "Add Category");	
-      return "category-edit";
-    }
-    
-    @RequestMapping(value = "/category/add", method = RequestMethod.POST)
-	public ModelAndView submit(@Valid @ModelAttribute("category") Category category, BindingResult result, ModelMap model) {
+
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
+	public String getCategory(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@PathVariable String id) {
+		model.addAttribute("msg", "Info Category");
+		Category category = aplicationService.getCategory(id);
+		model.addAttribute("name", category.getName());
+		return "category";
+	}
+
+	@RequestMapping(value = "/category/{id}/edit", method = RequestMethod.GET)
+	public ModelAndView getCategoryEdit(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+			@PathVariable String id) {
+		model.addAttribute("msg", "Edit Category");
+		model.addAttribute("postUrl", "/category/edit");
+		model.addAttribute("submitTitle", "SAVE");
+		Category category = aplicationService.getCategory(id);
+		return new ModelAndView("category-edit", "category", category);
+	}
+
+	@RequestMapping(value = "/category/add", method = RequestMethod.GET)
+	public ModelAndView getCategoryAdd(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		model.addAttribute("msg", "Add Category");
+		model.addAttribute("postUrl", "/category/add");
+		model.addAttribute("submitTitle", "ADD");
+		return  new ModelAndView("category-edit", "category", new Category());
+	}
+
+	@RequestMapping(value = "/category/add", method = RequestMethod.POST)
+	public ModelAndView submit(@Valid @ModelAttribute("category") Category category, BindingResult result,
+			ModelMap model) {
 		if (result.hasErrors()) {
 			return new ModelAndView("error");
 		}
@@ -50,9 +60,9 @@ public class CategoryController extends AbstractController {
 		} catch (NoSuchAlgorithmException | BuilderExeption e) {
 			return new ModelAndView("error");
 		}
-	
+
 		Category res = aplicationService.createCategory(category);
 
-		return new ModelAndView("redirect:/company/"+res.getId());
+		return new ModelAndView("redirect:/category/" + res.getId());
 	}
 }

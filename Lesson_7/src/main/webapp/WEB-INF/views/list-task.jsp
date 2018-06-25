@@ -6,10 +6,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app='pfqApp'>
 <jsp:include page="/WEB-INF/includes/head.jsp"></jsp:include>
-<body>
+<body ng-controller='TaskController'>
 	<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
 
-	<div class="wrapper" ng-controller='TaskController'>
+	<div class="wrapper" >
+	
+        
 		<jsp:include page="/WEB-INF/includes/sidebar.jsp"></jsp:include>
 		<!-- Page Content  -->
 		<main role="main" class="container-fluid">
@@ -18,11 +20,13 @@
 			<h1>
 				<c:out value="${msg}" />
 			</h1>
+			    <base-url model="baseUrl" url="${pageContext.request.contextPath}"></base-url>
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
-			
-				<a type="button" href= "<c:url value="/company/add" />" class="btn  btn-outline-success">
-					<i class="fas fa-plus-circle"></i> <span></span>
+
+				<a type="button" href="<c:url value="/company/add" />"
+					class="btn  btn-outline-success"> <i class="fas fa-plus-circle"></i>
+					<span></span>
 				</a>
 			</div>
 			</nav>
@@ -41,6 +45,7 @@
 								<th scope="col">End</th>
 								<th scope="col">Company</th>
 								<th scope="col">Category</th>
+								<th scope="col">Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -58,6 +63,8 @@
 									<div ng-repeat="(index,value) in item.categoryInfo">
 										{{value}}</div>
 								</td>
+								<td><a href="{{baseUrl}}/task/{{item.id}}/edit" type="button" class="btn btn-primary ">Edit</a></td>
+
 							</tr>
 
 						</tbody>

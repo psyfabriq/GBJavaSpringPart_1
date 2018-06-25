@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app='pfqApp'>
 <jsp:include page="/WEB-INF/includes/head.jsp"></jsp:include>
-<body>
+<body ng-controller='CompanyController'>
 
 	<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
 
@@ -15,15 +15,18 @@
 		<h1>
 			<c:out value="${msg}" />
 		</h1>
-		<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<base-url model="baseUrl" url="${pageContext.request.contextPath}"></base-url>
+				{{baseUrl}}
+		
+     	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-
-				<a type="button" href= "<c:url value="/company/add" />" class="btn  btn-outline-success">
-					<i class="fas fa-plus-circle"></i> <span></span>
-				</a>
+			<a type="button" href="<c:url value="/company/add" />"
+				class="btn  btn-outline-success"> <i class="fas fa-plus-circle"></i>
+				<span></span>
+			</a>
 		</div>
 		</nav>
-		<div ng-controller='CompanyController'>
+		<div >
 			<div infinite-scroll='listcompany.nextPage()'
 				infinite-scroll-disabled='listcompany.busy'
 				infinite-scroll-distance='1'>
@@ -44,7 +47,8 @@
 							<th scope="row">{{$index}}</th>
 							<td>{{item.name}}</td>
 							<td>{{item.address}}</td>
-							<td>{{item.address}}</td>
+							<td><a href="{{baseUrl}}/company/{{item.id}}/edit"
+								type="button" class="btn btn-primary ">Edit</a></td>
 						</tr>
 
 					</tbody>

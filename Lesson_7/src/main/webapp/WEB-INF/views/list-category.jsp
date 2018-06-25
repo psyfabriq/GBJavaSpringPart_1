@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app='pfqApp'>
 <jsp:include page="/WEB-INF/includes/head.jsp"></jsp:include>
-<body>
+<body ng-controller='CategoryController'>
 
 	<jsp:include page="/WEB-INF/includes/navmenu.jsp"></jsp:include>
 
@@ -15,15 +15,17 @@
 		<h1>
 			<c:out value="${msg}" />
 		</h1>
+		<base-url model="baseUrl" url="${pageContext.request.contextPath}"></base-url>
+		{{baseUrl}}
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
-
-			<button type="button" class="btn  btn-outline-success">
-				<i class="fas fa-plus-circle"></i> <span></span>
-			</button>
+			<a type="button" href="<c:url value="/category/add" />"
+				class="btn  btn-outline-success"> <i class="fas fa-plus-circle"></i>
+				<span></span>
+			</a>
 		</div>
 		</nav>
-		<div ng-controller='CategoryController'>
+		<div >
 			<div infinite-scroll='listcategory.nextPage()'
 				infinite-scroll-disabled='listcategory.busy'
 				infinite-scroll-distance='1'>
@@ -33,12 +35,15 @@
 						<tr>
 							<th scope="col">#</th>
 							<th scope="col">Name</th>
+							<th scope="col">Action</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-repeat='item in listcategory.items'>
 							<th scope="row">{{$index}}</th>
 							<td>{{item.name}}</td>
+							<td><a href="{{baseUrl}}/category/{{item.id}}/edit"
+								type="button" class="btn btn-primary ">Edit</a></td>
 						</tr>
 
 					</tbody>

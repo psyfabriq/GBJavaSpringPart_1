@@ -193,19 +193,19 @@ public class AplicationServiceImpl implements AplicationService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category getCategory(String id) {
-		return categoryDAO.getCategoryById(id).get(1);
+		return categoryDAO.getCategoryById(id).get(0);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Company getCompany(String id) {
-		return companyDAO.getCompanyById(id);
+		return companyDAO.getCompanyById(id).get(0);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Task getTask(String id) {
-		return taskDAO.getTaskById(id).get(1);
+		return taskDAO.getTaskById(id).get(0);
 	}
 
 	@Override

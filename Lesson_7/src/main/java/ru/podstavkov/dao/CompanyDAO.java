@@ -1,5 +1,7 @@
 package ru.podstavkov.dao;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -7,9 +9,13 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Company;
 import ru.podstavkov.entity.Task;
 
@@ -30,24 +36,25 @@ public class CompanyDAO extends AbstractDAO {
 			return;
 		
         CriteriaBuilder cb = this.em.getCriteriaBuilder();
-        // create update
         CriteriaUpdate<Company> update = cb.createCriteriaUpdate(Company.class);
         Root e = update.from(Company.class);
-        // set update and where clause
         update.set("description", company.getDescription());
         update.set("address", company.getAddress());
         update.set("name", company.getName());
-        //update.set("amount", company.getTasks());
         update.where(cb.greaterThanOrEqualTo(e.get("id"), company.getId()));
-        // perform update
         this.em.createQuery(update).executeUpdate();
 	
 	}
 
-	public Company getCompanyById(String id) {
+	public List<Company> getCompanyById(String ...id) {
 		if (id == null)
 			return null;
-		return em.find(Company.class, id);
+		
+		Session session = em.unwrap(Session.class);		
+		Criteria c = session.createCriteria(Company.class);
+		c.setMaxResults(1);
+		c.add(Restrictions.in("id",Arrays.asList(id)));
+		return c.list();
 	}
 
 	public void removeCompany(Company company) {
