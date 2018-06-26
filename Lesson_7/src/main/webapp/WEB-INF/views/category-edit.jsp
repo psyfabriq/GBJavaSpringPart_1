@@ -21,7 +21,7 @@
 		<form:form method="POST"
 			action="${pageContext.request.contextPath}${postUrl}"
 			modelAttribute="category">
-
+            <form:hidden path="id"></form:hidden>
 			<div class="form-group">
 				<form:label for="usr" path="name">Name:</form:label> 
 				<form:input type="text" path="name" class="form-control" id="usr"/>

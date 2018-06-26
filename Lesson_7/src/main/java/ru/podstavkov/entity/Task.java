@@ -117,7 +117,16 @@ public class Task extends AbstractEntity {
 	public Date getPublishedDate() {
 		return publishedDate;
 	}
+	
 
+
+	public void setCategory(List<Category> category) {
+		this.category = category;
+	}
+
+	public void setOwner(Company owner) {
+		this.owner = owner;
+	}
 
 	public Date getEndDate() {
 		return endDate;

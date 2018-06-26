@@ -1,6 +1,5 @@
 package ru.podstavkov.dao;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,16 +14,26 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Company;
-import ru.podstavkov.entity.Task;
 
 @Component
 @Transactional
 public class CompanyDAO extends AbstractDAO {
 
 	public List<Company> getListCompany() {
-		return em.createQuery("SELECT e FROM Company e", Company.class).getResultList();
+		Session session = em.unwrap(Session.class);		
+		Criteria criteria = session.createCriteria(Company.class);	
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
+		return criteria.list();
+	}
+	
+	public List<Company> getListCompany(int start, int count) {
+		Session session = em.unwrap(Session.class);		
+		Criteria criteria = session.createCriteria(Company.class);
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(count);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
+		return criteria.list();
 	}
 
 	public Company merge(Company company) {

@@ -49,21 +49,22 @@ public class TestContextAnnotation {
 	        
 	        List<Company> lcompany = new ArrayList<>();
 	        List<Category> lcategory = new ArrayList<>();
+	        */
 	        /*
 	        for (int i = 0; i < 3; i++) {
 		        ObjectNode objectNodeCategory = mapper.createObjectNode();
-		        objectNodeCategory.put("name", "Category"+i);
+		        objectNodeCategory.put("name", "Category "+i);
 		        Category c = tservice.createCategory(AppUtil.getValues(objectNodeCategory.toString()));
 		        lcategory.add(c);
 		        Assert.assertNotNull(c);
 			}
-	        */
-	        /*
+	        
+	        
 	        for (int i = 0; i < 4; i++) {
 		        ObjectNode objectNodeCompany = mapper.createObjectNode();
-		        objectNodeCompany.put("name", "COMPANY"+i);
-		        objectNodeCompany.put("address", "ADRESS");
-		        objectNodeCompany.put("description", "DESCRIPTION");
+		        objectNodeCompany.put("name", "COMPANY "+i);
+		        objectNodeCompany.put("address", "ADRESS  "+i);
+		        objectNodeCompany.put("description", "DESCRIPTION "+i);
 		        Company c = tservice.createCompany(AppUtil.getValues(objectNodeCompany.toString()));
 		        lcompany.add(c);
 		        Assert.assertNotNull(c);
@@ -73,12 +74,12 @@ public class TestContextAnnotation {
 	        lcompany = (List<Company>)tservice.listCompany();
 	        lcategory = (List<Category>)tservice.listCategory();
 	        
-	        for (int i = 0; i < 7; i++) {
+	        for (int i = 4; i < 6; i++) {
 	        	ObjectNode objectNodeTask  = mapper.createObjectNode();
 	        	
 	        	Company com = lcompany.get(getRandomNumberInRange(1,lcompany.size())-1);
 
-		        objectNodeTask.put("name", "task"+ new Date().toString());
+		        objectNodeTask.put("name", "task "+i);
 		        objectNodeTask.put("content", "some text : ))))))");
 		        objectNodeTask.put("owner_id", com.getId());
 		        
@@ -93,10 +94,7 @@ public class TestContextAnnotation {
 		        Assert.assertNotNull(tservice.createTask(AppUtil.getValues(objectNodeTask.toString())));
   
 	        }
-	        
+	  }
+	  */
+//}
 
-	        
-	        
-	    }
-}
-*/

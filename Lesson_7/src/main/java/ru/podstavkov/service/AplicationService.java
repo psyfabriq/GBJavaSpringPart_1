@@ -35,9 +35,11 @@ public interface AplicationService {
 	Task getTask(String id);
 	Collection<Task>  getTasks(String ...ids);
 	
-	Collection<Category> listCategory();
-	Collection<Company>  listCompany();
-	Collection<Task>     listTask();
+	List<Category> listCategory();
+	List<Category> listCategory(Map<String, Object> map);
+	List<Company>  listCompany();
+	List<Company>  listCompany(Map<String, Object> map);
+	List<Task>     listTask();
 	List<Task>     listTask(Map<String, Object> map);	
 	
 	Collection<Task>       getListTaskByCategory(String category_id);

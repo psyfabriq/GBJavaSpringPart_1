@@ -1,6 +1,5 @@
 package ru.podstavkov.dao;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,18 +15,26 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.podstavkov.entity.Category;
-import ru.podstavkov.entity.Company;
-import ru.podstavkov.entity.Task;
 
 @Component
 @Transactional
 public class CategoryDAO extends AbstractDAO {
 
 	public List<Category> getListCategory() {
-
-		return em.createQuery("SELECT e FROM Category e", Category.class).getResultList();
+		Session session = em.unwrap(Session.class);		
+		Criteria criteria = session.createCriteria(Category.class);	
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
+		return criteria.list();
 	}
-
+	
+	public List<Category> getListCategory(int start, int count) {
+		Session session = em.unwrap(Session.class);		
+		Criteria criteria = session.createCriteria(Category.class);
+		criteria.setFirstResult(start);
+		criteria.setMaxResults(count);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
+		return criteria.list();
+	}
 	public Category merge(Category category) {
 		return em.merge(category);
 	}
@@ -48,10 +55,10 @@ public class CategoryDAO extends AbstractDAO {
 		if (id == null)
 			return null;
 		Session session = em.unwrap(Session.class);		
-		Criteria c = session.createCriteria(Category.class);
-		c.setMaxResults(1);
-		c.add(Restrictions.in("id",Arrays.asList(id)));
-		return c.list();
+		Criteria criteria = session.createCriteria(Category.class);
+		criteria.setMaxResults(1);
+		criteria.add(Restrictions.in("id",Arrays.asList(id)));
+		return criteria.list();
 	}
 
 	public void removeCategory(Category category) {

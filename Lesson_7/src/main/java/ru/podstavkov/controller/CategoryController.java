@@ -28,6 +28,8 @@ public class CategoryController extends AbstractController {
 		model.addAttribute("msg", "Info Category");
 		Category category = aplicationService.getCategory(id);
 		model.addAttribute("name", category.getName());
+		model.addAttribute("edit", "/category/" + id + "/edit");
+		model.addAttribute("delete", "/category/" + id + "/delete");
 		return "category";
 	}
 

@@ -19,7 +19,7 @@
 		<form:form method="POST"
 			action="${pageContext.request.contextPath}${postUrl}"
 			modelAttribute="company">
-
+			<form:hidden path="id"></form:hidden>
 			<div class="form-group">
 				<form:label for="usr" path="name">Name:</form:label>
 				<form:input type="text" path="name" class="form-control" id="usr" />
@@ -30,7 +30,8 @@
 			</div>
 			<div class="form-group">
 				<form:label for="des" path="description">Description:</form:label>
-				<form:textarea rows="5" path="description" class="form-control" id="des" />
+				<form:textarea rows="5" path="description" class="form-control"
+					id="des" />
 			</div>
 			<input type="submit" class="btn btn-info" value="${submitTitle}" />
 

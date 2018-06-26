@@ -1,18 +1,11 @@
 
-
-$.noConflict();
-jQuery( document ).ready(function( $ ) {
-	  $("select").dashboardCodeBsMultiSelect();
-	  console.log("TEST");
-});
-
 var pfqApp = angular.module('pfqApp', [ 'infinite-scroll' ]);
 
 pfqApp.controller('TaskController', function($scope, $timeout, ListLoad) {
 	$scope.baseUrl = '';
 	$scope.filterData = {
 		position : 0,
-		count : 3,
+		count : 20,
 		selectedCompany : [],
 		selectedCategory : []
 	};
@@ -27,11 +20,13 @@ pfqApp.controller('TaskController', function($scope, $timeout, ListLoad) {
 
 	$scope.seFilter = function() {
 		$scope.filterData.position = 0;
+		$scope.listtask.reload($scope.filterData);
 	};
 
 	ListLoad.setData($scope.filterData);
 	ListLoad.setURL('api/get-list-task');
 	$scope.listtask = new ListLoad();
+	
 });
 
 pfqApp.controller('CompanyController', function($scope, $timeout, ListLoad) {
@@ -90,20 +85,20 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 
 	var _data = {
 		position : 0,
-		count : 6
+		count : 15
 	};
 
 	ListLoad.setURL = function(url) {
 		baseUrl = url;
 	}
-
+	
 	ListLoad.setData = function(data) {
 		_data = data;
 	}
+	
+	 function privateFunction(){
 
-	ListLoad.getTEST = function() {
-		return baseUrl;
-	}
+     }
 
 	ListLoad.prototype.nextPage = function() {
 		if (this.busy || !this.load)
@@ -124,7 +119,7 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 			var items = response;
 			if (this.count == 0) {
 				if (items.length != 0) {
-					_data.position = _data.position + items.length + 1;
+					_data.position = _data.position + items.length + 2;
 					for (var i = 0; i < items.length; i++) {
 						this.items.push(items[i]);
 					}
@@ -139,6 +134,50 @@ pfqApp.factory('ListLoad', function($http, ConnectService) {
 		}.bind(this));
 
 	};
+	
+	ListLoad.prototype.reload = function(newdata){
+		this.items = [];
+		this.busy = false;
+		this.load = true;
+		this.count = 0;
+		this.after = '';
+		
+		_data = newdata;
+		
+		
+		if (this.busy || !this.load)
+			return;
+		this.busy = true;
+
+		var req = {
+			method : 'POST',
+			url : baseUrl,
+			headers : {
+				'Content-Type' : 'application/json'
+			},
+			data : _data
+		};
+
+		ConnectService.post(req).then(function(response) {
+			this.busy = false;
+			var items = response;
+			if (this.count == 0) {
+				if (items.length != 0) {
+					_data.position = _data.position + items.length + 2;
+					for (var i = 0; i < items.length; i++) {
+						this.items.push(items[i]);
+					}
+					this.count = items.length;
+				} else {
+					this.load = false;
+				}
+			}else{ this.count--;}
+
+			this.busy = false;
+
+		}.bind(this));
+		
+     };
 
 	return ListLoad;
 });

@@ -16,7 +16,6 @@
 			<c:out value="${msg}" />
 		</h1>
 		<base-url model="baseUrl" url="${pageContext.request.contextPath}"></base-url>
-		{{baseUrl}}
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container-fluid">
 			<a type="button" href="<c:url value="/category/add" />"

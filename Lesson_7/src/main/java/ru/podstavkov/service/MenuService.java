@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 public class MenuService {
 	public List<Map<String,String>> getListNavigate() {		
 		List<Map<String,String>> list = new ArrayList<>();
-		list.add(getItem("Задачи","/"));
-		list.add(getItem("Компании","/list-company"));
-		list.add(getItem("Категории","/list-category"));
+		list.add(getItem("Tasks","/"));
+		list.add(getItem("Companies","/list-company"));
+		list.add(getItem("Categories","/list-category"));
 		
 	
 		return list;

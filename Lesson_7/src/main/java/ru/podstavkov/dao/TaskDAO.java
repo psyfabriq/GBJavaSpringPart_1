@@ -39,7 +39,7 @@ public class TaskDAO extends AbstractDAO{
 		c.setFirstResult(start);
 		c.setMaxResults(count);
 		c.addOrder(Order.desc("publishedDate"));
-		//c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
+		c.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
 		
 		
 		if(idsCategory.isPresent())
@@ -49,14 +49,14 @@ public class TaskDAO extends AbstractDAO{
 			c.createAlias("owner", "companyAlias");
 		
 		
-		idsCategory.ifPresent(v -> {c.add(Restrictions.eq("categoryAlias.id", v));});
+		idsCategory.ifPresent(v -> {c.add(Restrictions.in("categoryAlias.id", v));});
 		idsCompany.ifPresent(v -> {c.add(Restrictions.in("companyAlias.id", v));});
 		
 		//idsCategory.ifPresent(v -> v.forEach(e -> { c.add(Restrictions.eq("categoryAlias.id", e)); }));
 		//idsCompany.ifPresent(v -> v.forEach(e -> {c.add(Restrictions.in("companyAlias.id", e));}));
 		
 		
-		return new ArrayList<Task>(c.list());
+		return c.list();
 		//return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
 	}
 

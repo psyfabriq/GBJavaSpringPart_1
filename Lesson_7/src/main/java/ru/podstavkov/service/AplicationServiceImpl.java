@@ -225,19 +225,35 @@ public class AplicationServiceImpl implements AplicationService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<Category> listCategory() {
+	public List<Category> listCategory() {
 		return categoryDAO.getListCategory();
 	}
-
+	
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<Company> listCompany() {
-		return companyDAO.getListCompany();
+	public List<Category> listCategory(Map<String, Object> map) {
+		int start = (Integer) map.get("position");
+		int count = (Integer) map.get("count");
+		return categoryDAO.getListCategory(start,count);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection<Task> listTask() {
+	public List<Company> listCompany() {
+		return companyDAO.getListCompany();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Company> listCompany(Map<String, Object> map) {
+		int start = (Integer) map.get("position");
+		int count = (Integer) map.get("count");
+		return companyDAO.getListCompany(start,count);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Task> listTask() {
 		return taskDAO.getListTask();
 	}
 
