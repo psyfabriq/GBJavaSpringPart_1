@@ -53,7 +53,7 @@ public class Task extends AbstractEntity {
 	private Date endDate;
 	
 	
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(
     		name = "tasks_categories",
             joinColumns = { @JoinColumn(name = "task_id") }, 
