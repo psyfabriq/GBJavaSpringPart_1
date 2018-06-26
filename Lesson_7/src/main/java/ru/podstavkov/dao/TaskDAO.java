@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Task;
 
-@Repository("adDAO")
+@Repository
 @Transactional
 public class TaskDAO extends AbstractDAO{
 	
@@ -63,7 +63,7 @@ public class TaskDAO extends AbstractDAO{
 	public Task merge(Task task) {
 		return em.merge(task);
 	}
-	
+	/*
 	public void persist(Task task) {
 		if (task == null)
 			return;
@@ -81,6 +81,7 @@ public class TaskDAO extends AbstractDAO{
         // perform update
         this.em.createQuery(update).executeUpdate();
 	}
+	*/
 
 	public List<Task> getTaskById(String ...id) {
 		if (id == null)
@@ -89,22 +90,5 @@ public class TaskDAO extends AbstractDAO{
 		return task;
 	}
 
-	public void removeTask(Task task) {
-		if (task == null)
-			return;
-		removeTask(task.getId());
-	}
 
-	public void removeTask(String adid) {
-		if (adid == null || adid.isEmpty())
-			return;
-		
-		 CriteriaBuilder cb = this.em.getCriteriaBuilder();
-		 CriteriaDelete<Task> delete = cb.createCriteriaDelete(Task.class);
-		 Root e = delete.from(Task.class);
-		 delete.where(cb.lessThanOrEqualTo(e.get("id"), adid));
-	     this.em.createQuery(delete).executeUpdate();
-
-
-	}
 }

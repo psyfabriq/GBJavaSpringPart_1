@@ -40,6 +40,7 @@ public class CompanyDAO extends AbstractDAO {
 		return em.merge(company);
 	}
 
+	/*
 	public void persist(Company company) {
 		if (company == null)
 			return;
@@ -54,6 +55,7 @@ public class CompanyDAO extends AbstractDAO {
         this.em.createQuery(update).executeUpdate();
 	
 	}
+	*/
 
 	public List<Company> getCompanyById(String ...id) {
 		if (id == null)
@@ -66,21 +68,4 @@ public class CompanyDAO extends AbstractDAO {
 		return c.list();
 	}
 
-	public void removeCompany(Company company) {
-		if (company == null)
-			return;
-		removeCompany(company.getId());
-	}
-
-	public void removeCompany(String companyid) {
-		if (companyid == null || companyid.isEmpty())
-			return;
-		
-		 CriteriaBuilder cb = this.em.getCriteriaBuilder();
-		 CriteriaDelete<Company> delete = cb.createCriteriaDelete(Company.class);
-		 Root e = delete.from(Company.class);
-		 delete.where(cb.lessThanOrEqualTo(e.get("id"), companyid));
-	     this.em.createQuery(delete).executeUpdate();
-
-	}
 }

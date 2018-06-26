@@ -110,23 +110,20 @@ public class AplicationServiceImpl implements AplicationService {
 
 	@Override
 	@Transactional(readOnly = false)
-	public boolean deleteCategory(String id) {
-		categoryDAO.removeCategory(id);
-		return true;
+	public boolean deleteCategory(String id) {	
+		return categoryDAO.deleteById(Category.class,id);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public boolean deleteCompany(String id) {
-		companyDAO.removeCompany(id);
-		return true;
+		return companyDAO.deleteById(Company.class,id);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public boolean deleteTask(String id) {
-		taskDAO.removeTask(id);
-		return true;
+		return taskDAO.deleteById(Task.class,id);
 	}
 
 	@Override
@@ -135,7 +132,7 @@ public class AplicationServiceImpl implements AplicationService {
 		Category category;
 		try {
 			category = Category.getBuilder().setId((String) map.get("id")).setName((String) map.get("name")).build();
-			categoryDAO.persist(category);
+			categoryDAO.persist(Category.class,category);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -150,7 +147,7 @@ public class AplicationServiceImpl implements AplicationService {
 		try {
 			company = Company.getBuilder().setId((String) map.get("id")).setName((String) map.get("name"))
 					.setAddress((String) map.get("address")).setDescription((String) map.get("description")).build();
-			companyDAO.persist(company);
+			companyDAO.persist(Company.class,company);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -165,7 +162,7 @@ public class AplicationServiceImpl implements AplicationService {
 		try {
 			task = Task.getBuilder().setId((String) map.get("id")).setName((String) map.get("name"))
 					.setContent((String) map.get("content")).setOwner(getCompany((String) map.get("owner_id"))).build();
-			taskDAO.persist(task);
+			taskDAO.persist(Task.class,task);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -180,19 +177,19 @@ public class AplicationServiceImpl implements AplicationService {
 	@Override
 	@Transactional(readOnly = false)
 	public void updateCategory(Category category) {
-			categoryDAO.persist(category);
+			categoryDAO.persist(Category.class,category);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void updateCompany(Company company) {
-			companyDAO.persist(company);
+			companyDAO.persist(Company.class,company);
 	}
 
 	@Override
 	@Transactional(readOnly = false)
 	public void updateTask(Task task) {
-			taskDAO.persist(task);
+			taskDAO.persist(Task.class,task);
 	}
 	
 	

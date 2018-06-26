@@ -20,7 +20,7 @@ import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "company")
-public class Company extends AbstractEntity {
+public class Company extends AbstractEntity implements EntityInterface {
 	
 	
 

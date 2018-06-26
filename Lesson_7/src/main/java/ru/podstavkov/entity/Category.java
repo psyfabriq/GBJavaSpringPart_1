@@ -17,9 +17,9 @@ import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "category")
-public class Category extends AbstractEntity {
+public class Category  extends AbstractEntity implements EntityInterface {
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.REFRESH })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
 	@JoinTable(name = "tasks_categories", joinColumns = { @JoinColumn(name = "category_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "task_id") })
 	private List<Task> tasks = new ArrayList();

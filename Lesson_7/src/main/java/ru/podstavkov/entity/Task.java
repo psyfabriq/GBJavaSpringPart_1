@@ -33,7 +33,7 @@ import ru.podstavkov.utils.AppUtil;
 
 @Entity
 @Table(name = "task")
-public class Task extends AbstractEntity {
+public class Task extends AbstractEntity implements EntityInterface {
 
 	
 	@Column(name = "content")
