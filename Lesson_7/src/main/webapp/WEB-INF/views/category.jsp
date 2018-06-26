@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,10 +21,13 @@
 		<div class="card">
 			<div class="card-body">
 				<h4 class="card-title">
-					<c:out value="${name}" />
+					<c:out value="${category.name}" />
 				</h4>
-				<a href="<c:url value="${edit}" />" class="card-link">Edit</a> <a
-					href="<c:url value="${delete}" />" class="card-link">Delete</a>
+				<a href="<c:url value="${edit}" />" class="card-link">Edit</a> 			
+				<form:form method="POST" action="${pageContext.request.contextPath}${delete}" modelAttribute="category">
+				    <form:hidden path="id"></form:hidden>
+				    <input type="submit" class="card-link" value="Delete" />
+				</form:form>
 			</div>
 		</div>
 

@@ -26,19 +26,13 @@ import ru.podstavkov.entity.exeption.BuilderExeption;
 public class TaskController extends AbstractController {
 
 	@RequestMapping(value = "/task/{id}", method = RequestMethod.GET)
-	public String getTask(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+	public ModelAndView getTask(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			@PathVariable String id) {
 		model.addAttribute("msg", "Info Task");
 		Task task = aplicationService.getTask(id);
-		model.addAttribute("name", task.getName());
-		model.addAttribute("published_date", task.getPublishedDate());
-		model.addAttribute("end_date", task.getEndDate());
-		model.addAttribute("active", task.isActive());
-		model.addAttribute("owner", task.getOwner());
-		model.addAttribute("categories", task.getCategory());
 		model.addAttribute("edit", "/task/" + id + "/edit");
-		model.addAttribute("delete", "/task/" + id + "/delete");
-		return "task";
+		model.addAttribute("delete", "/task/delete");
+		return new ModelAndView("task", "task", task);
 	}
 
 	@RequestMapping(value = "/task/{id}/edit", method = RequestMethod.GET)
@@ -75,7 +69,7 @@ public class TaskController extends AbstractController {
 
 	@RequestMapping(value = "/task/add", method = RequestMethod.POST)
 	public ModelAndView submit(@Valid @ModelAttribute("task") Task task, BindingResult result, ModelMap model,
-			@RequestParam("categoryId") String[] categorysId, @RequestParam("companyId") String companyId) {
+			@RequestParam("categorysId") String[] categorysId, @RequestParam("companyId") String companyId) {
 		
 		List<Category> categories = (List<Category>)aplicationService.getlistCategoryByIDs(categorysId);
 		Company company   = aplicationService.getCompany(companyId);
@@ -96,6 +90,15 @@ public class TaskController extends AbstractController {
 		Task res = aplicationService.createTask(task);
 
 		return new ModelAndView("redirect:/task/" + res.getId());
+	}
+	@RequestMapping(value = "/task/delete", method = RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute("task") Task task, BindingResult result, ModelMap model) {
+		
+		if (result.hasErrors() || !aplicationService.deleteTask(task.getId())) {
+			return new ModelAndView("error");
+		}
+		
+		return new ModelAndView("redirect:/");
 	}
 
 	@RequestMapping(value = "/task/edit", method = RequestMethod.POST)

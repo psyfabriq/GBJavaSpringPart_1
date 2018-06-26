@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Company;
 import ru.podstavkov.entity.exeption.BuilderExeption;
 
@@ -22,16 +24,13 @@ import ru.podstavkov.entity.exeption.BuilderExeption;
 public class CompanyController extends AbstractController {
 
 	@RequestMapping(value = "/company/{id}", method = RequestMethod.GET)
-	public String getCompany(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+	public ModelAndView getCompany(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			@PathVariable String id) {
 		model.addAttribute("msg", "Info Company");
 		Company company = aplicationService.getCompany(id);
-		model.addAttribute("name", company.getName());
-		model.addAttribute("address", company.getAddress());
-		model.addAttribute("description", company.getDescription());
 		model.addAttribute("edit", "/company/" + id + "/edit");
-		model.addAttribute("delete", "/company/" + id + "/delete");
-		return "company";
+		model.addAttribute("delete", "/company/delete");
+		return  new ModelAndView("company", "company", company);
 	}
 
 	@RequestMapping(value = "/company/{id}/edit", method = RequestMethod.GET)
@@ -52,8 +51,19 @@ public class CompanyController extends AbstractController {
 		return new ModelAndView("company-edit", "company", new Company());
 	}
 
+	@RequestMapping(value = "/company/delete", method = RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute("company") Company company, BindingResult result, ModelMap model) {
+
+		if (result.hasErrors() || !aplicationService.deleteCompany(company.getId())) {
+			return new ModelAndView("error");
+		}
+
+		return new ModelAndView("redirect:/list-company");
+	}
+
 	@RequestMapping(value = "/company/add", method = RequestMethod.POST)
-	public ModelAndView submit(@Valid @ModelAttribute("company") Company company, BindingResult result, ModelMap model) {
+	public ModelAndView submit(@Valid @ModelAttribute("company") Company company, BindingResult result,
+			ModelMap model) {
 		if (result.hasErrors()) {
 			return new ModelAndView("error");
 		}
@@ -62,12 +72,12 @@ public class CompanyController extends AbstractController {
 		} catch (NoSuchAlgorithmException | BuilderExeption e) {
 			return new ModelAndView("error");
 		}
-	
+
 		Company res = aplicationService.createCompany(company);
 
-		return new ModelAndView("redirect:/company/"+res.getId());
+		return new ModelAndView("redirect:/company/" + res.getId());
 	}
-	
+
 	@RequestMapping(value = "/company/edit", method = RequestMethod.POST)
 	public ModelAndView edit(@Valid @ModelAttribute("company") Company company, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
@@ -79,8 +89,7 @@ public class CompanyController extends AbstractController {
 			return new ModelAndView("error");
 		}
 		aplicationService.updateCompany(company);
-		return new ModelAndView("redirect:/company/"+company.getId());
+		return new ModelAndView("redirect:/company/" + company.getId());
 	}
-	
 
 }

@@ -13,24 +13,25 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ru.podstavkov.entity.Category;
 import ru.podstavkov.entity.Company;
+import ru.podstavkov.entity.Task;
 import ru.podstavkov.entity.exeption.BuilderExeption;
 
 @Controller
 public class CategoryController extends AbstractController {
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET)
-	public String getCategory(HttpServletRequest request, HttpServletResponse response, ModelMap model,
+	public ModelAndView getCategory(HttpServletRequest request, HttpServletResponse response, ModelMap model,
 			@PathVariable String id) {
 		model.addAttribute("msg", "Info Category");
 		Category category = aplicationService.getCategory(id);
-		model.addAttribute("name", category.getName());
 		model.addAttribute("edit", "/category/" + id + "/edit");
-		model.addAttribute("delete", "/category/" + id + "/delete");
-		return "category";
+		model.addAttribute("delete", "/category/delete");
+		return  new ModelAndView("category", "category", category);
 	}
 
 	@RequestMapping(value = "/category/{id}/edit", method = RequestMethod.GET)
@@ -48,7 +49,17 @@ public class CategoryController extends AbstractController {
 		model.addAttribute("msg", "Add Category");
 		model.addAttribute("postUrl", "/category/add");
 		model.addAttribute("submitTitle", "ADD");
-		return  new ModelAndView("category-edit", "category", new Category());
+		return new ModelAndView("category-edit", "category", new Category());
+	}
+
+	@RequestMapping(value = "/category/delete", method = RequestMethod.POST)
+	public ModelAndView delete(@ModelAttribute("category") Category category, BindingResult result, ModelMap model) {
+
+		if (result.hasErrors() || !aplicationService.deleteCategory(category.getId())) {
+			return new ModelAndView("error");
+		}
+
+		return new ModelAndView("redirect:/list-category");
 	}
 
 	@RequestMapping(value = "/category/add", method = RequestMethod.POST)
@@ -67,7 +78,7 @@ public class CategoryController extends AbstractController {
 
 		return new ModelAndView("redirect:/category/" + res.getId());
 	}
-	
+
 	@RequestMapping(value = "/category/edit", method = RequestMethod.POST)
 	public ModelAndView edit(@Valid @ModelAttribute("category") Category category, BindingResult result,
 			ModelMap model) {

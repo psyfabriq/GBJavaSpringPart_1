@@ -24,7 +24,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
 
-				<a type="button" href="<c:url value="/company/add" />"
+				<a type="button" href="<c:url value="/task/add" />"
 					class="btn  btn-outline-success"> <i class="fas fa-plus-circle"></i>
 					<span></span>
 				</a>

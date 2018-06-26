@@ -60,12 +60,7 @@
 
 			</div>
 
-
-
-
-
 			<input type="submit" class="btn btn-info" value="${submitTitle}" />
-
 
 		</form:form>
 
