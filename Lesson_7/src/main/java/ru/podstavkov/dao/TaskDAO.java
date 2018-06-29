@@ -21,10 +21,16 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.podstavkov.entity.Category;
+import ru.podstavkov.entity.Company;
 import ru.podstavkov.entity.Task;
 
 @Repository
-public class TaskDAO extends AbstractDAO{
+public class TaskDAO extends AbstractDAO<Task>{
+	
+	public TaskDAO() {
+		super();
+		setClazz(Task.class);
+	}
 	
 	public List<Task> getListTask() {
 
@@ -50,18 +56,12 @@ public class TaskDAO extends AbstractDAO{
 		
 		idsCategory.ifPresent(v -> {c.add(Restrictions.in("categoryAlias.id", v));});
 		idsCompany.ifPresent(v -> {c.add(Restrictions.in("companyAlias.id", v));});
-		
-		//idsCategory.ifPresent(v -> v.forEach(e -> { c.add(Restrictions.eq("categoryAlias.id", e)); }));
-		//idsCompany.ifPresent(v -> v.forEach(e -> {c.add(Restrictions.in("companyAlias.id", e));}));
-		
-		
+				
 		return c.list();
-		//return em.createQuery("SELECT e FROM Task e  WHERE e.active = true ", Task.class).getResultList();
 	}
 
-	public Task merge(Task task) {
-		return em.merge(task);
-	}
+
+	
 	/*
 	public void persist(Task task) {
 		if (task == null)

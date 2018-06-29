@@ -6,17 +6,17 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface AppService<T> {
-	@Transactional(readOnly = false)
+	@Transactional
 	T create(T entity);
-	@Transactional(readOnly = false)
+	@Transactional
 	T create(Map<String, Object> map);
-	@Transactional(readOnly = false)
+	@Transactional
 	boolean delete(T entity);
-	@Transactional(readOnly = false)
+	@Transactional
 	boolean delete(Map<String, Object> map);
-	@Transactional(readOnly = false)
+	@Transactional
 	boolean update(T entity);
-	@Transactional(readOnly = false)
+	@Transactional
 	boolean update(Map<String, Object> map);
 	@Transactional(readOnly = true)
 	T get(String id);

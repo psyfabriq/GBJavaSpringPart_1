@@ -1,5 +1,6 @@
 package ru.podstavkov.entity;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -15,9 +16,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @MappedSuperclass
-public abstract class AbstractEntity {
+public abstract class AbstractEntity implements Serializable{
 	@Id
-	  @GeneratedValue(strategy=GenerationType.AUTO)
 	private String id = UUID.randomUUID().toString();
 	
 	@Column(name = "name")

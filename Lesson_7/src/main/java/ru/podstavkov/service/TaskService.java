@@ -19,17 +19,9 @@ import ru.podstavkov.entity.Task;
 import ru.podstavkov.entity.exeption.BuilderExeption;
 
 @Service
-public class TaskService implements AppService<Task> {
-
-	@Autowired
-	private TaskDAO taskDAO;
+@Component("taskservice")
+public class TaskService extends AbstractAppService<Task> {
 	
-	@Autowired
-	private CompanyDAO companyDAO;
-	
-	@Autowired
-	private CategoryDAO categoryDAO;
-
 	@Override
 	public Task create(Task entity) {
 		return taskDAO.merge(entity);
@@ -55,19 +47,19 @@ public class TaskService implements AppService<Task> {
 
 	@Override
 	public boolean delete(Task entity) {
-		return taskDAO.deleteById(Task.class, entity.getId());
+		return taskDAO.delete(entity.getId());
 	}
 
 	@Override
 	public boolean delete(Map<String, Object> map) {
 		if (map.isEmpty() && map.containsKey("id"))
 			return false;
-		return taskDAO.deleteById(Task.class, (String) map.get("id"));
+		return taskDAO.delete( (String) map.get("id"));
 	}
 
 	@Override
 	public boolean update(Task entity) {
-		return taskDAO.persist(Task.class, entity);
+		return taskDAO.persist( entity);
 	}
 
 	@Override
@@ -77,7 +69,7 @@ public class TaskService implements AppService<Task> {
 		try {
 			task = Task.getBuilder().setId((String) map.get("id")).setName((String) map.get("name"))
 					.setContent((String) map.get("content")).setOwner(getCompany((String) map.get("owner_id"))).build();
-			result = taskDAO.persist(Task.class, task);
+			result = taskDAO.persist(task);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -120,5 +112,7 @@ public class TaskService implements AppService<Task> {
 	private List<Category> getCategories(String ...ids) {
 		return categoryDAO.getCategoryById(ids);
 	}
+
+
 
 }

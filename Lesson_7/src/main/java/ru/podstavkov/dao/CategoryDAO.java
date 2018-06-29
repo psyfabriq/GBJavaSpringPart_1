@@ -16,9 +16,15 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.podstavkov.entity.Category;
+import ru.podstavkov.entity.Task;
 
 @Repository
-public class CategoryDAO extends AbstractDAO {
+public class CategoryDAO extends AbstractDAO<Category> {
+	
+	public CategoryDAO() {
+		super();
+		setClazz(Category.class);
+	}
 
 	public List<Category> getListCategory() {
 		Session session = em.unwrap(Session.class);		
@@ -35,9 +41,7 @@ public class CategoryDAO extends AbstractDAO {
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;	
 		return criteria.list();
 	}
-	public Category merge(Category category) {
-		return em.merge(category);
-	}
+
 
 	/*
 	public void persist(Category category) {

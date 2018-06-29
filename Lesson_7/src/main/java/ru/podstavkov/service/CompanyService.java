@@ -14,10 +14,8 @@ import ru.podstavkov.entity.Company;
 import ru.podstavkov.entity.exeption.BuilderExeption;
 
 @Service
-public class CompanyService implements AppService<Company> {
-
-	@Autowired
-	private CompanyDAO companyDAO;
+@Component("companyservice")
+public class CompanyService extends AbstractAppService<Company> {
 
 	@Override
 	public Company create(Company entity) {
@@ -30,6 +28,7 @@ public class CompanyService implements AppService<Company> {
 		try {
 			company = Company.getBuilder().setName((String) map.get("name")).setAddress((String) map.get("address"))
 					.setDescription((String) map.get("description")).build();
+			
 			return companyDAO.merge(company);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
@@ -42,7 +41,7 @@ public class CompanyService implements AppService<Company> {
 
 	@Override
 	public boolean delete(Company entity) {
-		return companyDAO.deleteById(Company.class,entity.getId());
+		return companyDAO.delete(entity.getId());
 
 	}
 
@@ -50,12 +49,12 @@ public class CompanyService implements AppService<Company> {
 	public boolean delete(Map<String, Object> map) {
 		if(map.isEmpty() && map.containsKey("id"))
 			return false;
-		return companyDAO.deleteById(Company.class,(String)map.get("id"));
+		return companyDAO.delete((String)map.get("id"));
 	}
 
 	@Override
 	public boolean update(Company entity) {
-		return companyDAO.persist(Company.class,entity);
+		return companyDAO.persist(entity);
 	}
 
 	@Override
@@ -65,7 +64,8 @@ public class CompanyService implements AppService<Company> {
 		try {
 			company = Company.getBuilder().setId((String) map.get("id")).setName((String) map.get("name"))
 					.setAddress((String) map.get("address")).setDescription((String) map.get("description")).build();
-			result = companyDAO.persist(Company.class,company);
+			System.out.println(company.toString());
+			result = companyDAO.persist(company);
 		} catch (BuilderExeption e) {
 			e.printStackTrace();
 		} catch (NoSuchAlgorithmException e) {
@@ -95,5 +95,7 @@ public class CompanyService implements AppService<Company> {
 		int count = (Integer) map.get("count");
 		return companyDAO.getListCompany(start,count);
 	}
+
+
 
 }
